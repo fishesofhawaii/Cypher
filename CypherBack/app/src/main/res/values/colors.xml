@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fc4c02</color>
+    <color name="colorPrimaryDark">#3d3935</color>
+    <color name="colorAccent">#b7b09c</color>
+
+    <color name="ArcelorMittalDarkGray">#4b4f54</color>
+    <color name="ArcelorMittalPurple">#7e5475</color>
+    <color name="ArcelorMittalBlue">#5b7f95</color>
+    <color name="ArcelorMittalGreen">#6fa287</color>
+    <color name="ArcelorMittalTan">#c6893f</color>
+
+    <color name="ArcelorMittalLightPurple">#8d89a5</color>
+    <color name="ArcelorMittalLightBlue">#9bb8d3</color>
+    <color name="ArcelorMittalLightGreen">#bbc592</color>
+    <color name="ArcelorMittalLightTan">#a89968</color>
+    <color name="ArcelorMittalPaleGray">#d1ccbd</color>
+
+
+</resources>
+
+<!--The colours are orange (Pantone 1655)
+and black (Pantone Black 7).
+Additional colours are gray (Pantone 7535),
+dark gray (Pantone 7540),
+purple (Pantone 5135),
+blue (Pantone 5415), green (Pantone 556),
+tan (Pantone 7510), light purple (Pantone 5285),
+light blue (Pantone 644), light green (Pantone 7493),
+light tan (Pantone 7503) and pale gray (Pantone 7534).-->
