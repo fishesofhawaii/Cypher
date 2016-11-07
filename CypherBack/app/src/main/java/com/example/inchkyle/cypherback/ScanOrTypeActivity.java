@@ -39,7 +39,7 @@ public class ScanOrTypeActivity extends Activity{
         int width = dm.widthPixels;
 
         getWindow().setLayout((int) (width*.8), (int) (height*.8));
-
+        System.out.println("pop it up!");
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -62,7 +62,6 @@ public class ScanOrTypeActivity extends Activity{
             }
         }
         else {
-
 
             //BELOW IS FOR THE CAMERA
             System.out.println("Request code : " + requestCode + " Result Code : " + resultCode);

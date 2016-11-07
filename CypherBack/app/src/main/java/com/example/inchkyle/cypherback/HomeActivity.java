@@ -30,24 +30,14 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-
         // BELOW is from LOGIN
         Intent home_intent = getIntent();
 
         if (home_intent != null) {
-            Bundle bundle = home_intent.getExtras();
-
-            String payroll_id = bundle.getString("ID");
-            String json_str = bundle.getString("JSON_str");
-
-            user = new User(payroll_id, json_str);
-
+            user = (User) home_intent.getSerializableExtra("User");
             user.set_locations();
-
-
         }
     }
-
 
     //Clicking the update update button should retrieve database values for the employee again
     public void update_click(View v) {
@@ -63,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
     public void scan_barcode_click(View v) {
         Intent typeLocation_intent = new Intent(HomeActivity.this, ScanOrTypeActivity.class);
         startActivityForResult(typeLocation_intent, BARCODE_METHOD_REQUEST);
+        System.out.println("Scan barcode click");
 
     }
 
@@ -73,21 +64,18 @@ public class HomeActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK){
             String barcode = data.getStringExtra("result");
-            System.out.println("Here yoooooooo " + barcode);
+
             if (user.check_location(barcode)) {
 
-                //Start activity that pulls up devices
-                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
-                Bundle bundle = new Bundle();
+                user.populate_location(barcode);
 
-                bundle.putString("ID", user.payroll_id);
-                bundle.putString("JSON_str", user.employee_json);
+                //Start activity that pulls up location questions
+                Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
 
-                intent.putExtras(bundle);
-                startActivity(intent);
-
-
-
+                intent.putExtra("User", user);
+//Broken, I think arraylist isnt serializable
+//                System.out.println("Put it in the intent");
+//                startActivity(intent);
             }
             else {
                 Toast.makeText(this, "This Location is not on your route!" +

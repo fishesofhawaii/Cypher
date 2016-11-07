@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ import java.util.HashMap;
 
 //User is the biggest class. It contains the data that this employee needs.
 //User has locations assigned, locations have items, and items have questions.
-public class User {
+public class User implements Serializable{
     String payroll_id;
     String employee_json;
     ArrayList<String> valid_locations = new ArrayList<>();
@@ -73,4 +74,12 @@ public class User {
 
         return false;
     }
+
+    //the given location will populate it's questions for answering, this is called after
+    //the location is scanned
+    public void populate_location(String barcode) {
+        //calls the particular loaction to fill it's questions
+        locations.get(barcode).populate_location_questions();
+    }
+
 }
