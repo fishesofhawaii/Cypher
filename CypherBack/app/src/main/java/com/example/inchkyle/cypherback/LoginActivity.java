@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     String json_string;
     Boolean LOGIN_SUCCESS = false;
 
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         params.put("user", payroll_id);
 
         //This is the post with the employee id (the payroll_id)
-        client.post("http://35.12.211.131:8000/questions/questionsbyuser",
+        client.post("http://35.12.211.77:8000/questions/questionsbyuser",
                 params, new ResponseHandlerInterface() {
 
             @Override
@@ -160,12 +161,9 @@ public class LoginActivity extends AppCompatActivity {
     public void go_to_home() {
 
         Intent login_intent = new Intent(LoginActivity.this, HomeActivity.class);
-        Bundle bundle = new Bundle();
+        user = new User(payroll_id, json_string);
 
-        bundle.putString("JSON_str", json_string);
-        bundle.putString("ID", payroll_id);
-
-        login_intent.putExtras(bundle);
+        login_intent.putExtra("User", user);
 
         startActivity(login_intent);
 
