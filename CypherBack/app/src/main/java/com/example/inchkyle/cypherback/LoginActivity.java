@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -30,7 +32,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+
     }
+
 
     public void log_in(View v) {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -40,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         params.put("user", payroll_id);
 
         //This is the post with the employee id (the payroll_id)
-        client.post("http://35.12.211.131:8000/questions/questionsbyuser",
+        client.post("http://35.12.212.158:8000/questions/questionsbyuser",
                 params, new ResponseHandlerInterface() {
 
             @Override
@@ -84,8 +90,9 @@ public class LoginActivity extends AppCompatActivity {
             public void sendFailureMessage(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 //Second to last called in a failure
                 System.out.println("Send fail");
-
             }
+
+//           TODO: Display message if user is unable to log in
 
             @Override
             public void sendRetryMessage(int retryNo) {
@@ -156,6 +163,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
     //If the post was successful (employee exists) then we can login to the app
     public void go_to_home() {
 

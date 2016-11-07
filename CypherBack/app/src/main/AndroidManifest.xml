@@ -15,7 +15,8 @@
 
         <activity android:name=".LoginActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
 
 
             <intent-filter>
