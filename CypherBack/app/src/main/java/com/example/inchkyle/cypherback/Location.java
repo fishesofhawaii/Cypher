@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 //Locations -> Items -> Questions
 //Locations also have questions
-public class Location {
+public class Location implements Serializable{
     String json_string;
     String loc_barcode_name;
     String barcode_num;

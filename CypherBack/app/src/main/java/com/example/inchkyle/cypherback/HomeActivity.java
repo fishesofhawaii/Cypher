@@ -20,7 +20,7 @@ import org.json.JSONObject;
  */
 
 public class HomeActivity extends AppCompatActivity {
-    static String url = "http://10.0.0.117:8000/questions/questionsbyuser";
+    static String url = "http://35.11.17.117:8000/questions/questionsbyuser";
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
 
     User user;
@@ -73,9 +73,9 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
 
                 intent.putExtra("User", user);
-//Broken, I think arraylist isnt serializable
-//                System.out.println("Put it in the intent");
-//                startActivity(intent);
+
+                System.out.println("Put it in the intent");
+                startActivity(intent);
             }
             else {
                 Toast.makeText(this, "This Location is not on your route!" +

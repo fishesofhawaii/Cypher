@@ -3,13 +3,14 @@ package com.example.inchkyle.cypherback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by inchkyle on 11/7/16.
  */
 
-public class Item {
+public class Item implements Serializable{
     String json_string;
     String item_name;
     String barcode_num;
