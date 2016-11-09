@@ -17,6 +17,9 @@ import java.util.HashMap;
 public class User implements Serializable{
     String payroll_id;
     String employee_json;
+    String current_barcode;
+    String location_barcode;
+
     ArrayList<String> valid_locations = new ArrayList<>();
     HashMap<String, Location> locations = new HashMap<>();
 
@@ -24,16 +27,6 @@ public class User implements Serializable{
         this.payroll_id = id;
         this.employee_json = json_str;
 
-    }
-
-    //Iterate through the user's information and print everything possible
-    public void print_locations() {
-
-        for (HashMap.Entry<String, Location> entry : locations.entrySet()) {
-            String key = entry.getKey();
-            Location value = entry.getValue();
-            System.out.println("Location Barcode, " + key + "\n" + value.print_items());
-        }
     }
 
     //This populates the hashmap that has the Locations in it. It also populates "valid_locations"
@@ -53,12 +46,14 @@ public class User implements Serializable{
 
                 valid_locations.add(barcode_num);
 
-                Location l = new Location(barcode_num, loc_barcode_name, location.toString());
+                //Create the location
+                Location l = new Location(barcode_num, location.toString());
+                //And then set extras
+                l.set_loc_barcode_name(loc_barcode_name);
+
                 this.locations.put(barcode_num, l);
 
             }
-
-            print_locations();
         }
 
         catch (JSONException e) {
@@ -66,6 +61,7 @@ public class User implements Serializable{
         }
 
     }
+    // Establish whether this location is updatable based on if it is in the users route
     public boolean check_location(String barcode_given){
 
         if (valid_locations.contains(barcode_given)) {
@@ -79,7 +75,22 @@ public class User implements Serializable{
     //the location is scanned
     public void populate_location(String barcode) {
         //calls the particular loaction to fill it's questions
+        location_barcode = barcode;
         locations.get(barcode).populate_location_questions();
     }
 
+
+    public void set_current_barcode(String barcode) {
+        current_barcode = barcode;
+    }
+
+    public void check_item(String barcode) {
+        Location l = locations.get(location_barcode);
+        //Maybe something other than "contains"
+//        return l.contains(barcode);
+    }
+
+    public Location get_location(String barcode) {
+        return locations.get(barcode);
+    }
 }

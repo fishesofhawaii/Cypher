@@ -68,7 +68,10 @@ public class HomeActivity extends AppCompatActivity {
             if (user.check_location(barcode)) {
 
                 user.populate_location(barcode);
+                user.set_current_barcode(barcode);
 
+                user.get_location(barcode).set_items();
+                user.get_location(barcode).print_location();
                 //Start activity that pulls up location questions
                 Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
 

@@ -5,20 +5,33 @@
     android:background="@color/ArcelorMittalLightBlue">
 
     <Button
-        android:text="Click on this to go to Questions"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_centerVertical="true"
+        android:text="Click Here to submit all answers"
+        android:layout_width="450dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/item" />
+        android:layout_marginBottom="29dp"
+        android:id="@+id/confirm_btn"
+        android:onClick="submit_answers"
+        android:backgroundTint="@color/ArcelorMittalLightGreen" />
 
     <TextView
         android:text="This will be replaced by a Recycle View!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="129dp"
+        android:layout_marginTop="38dp"
         android:id="@+id/textView"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:layout_height="600dp"
+        android:id="@+id/item_listview"
+        android:dividerHeight="40dp"
+        android:clickable="true" />
 </RelativeLayout>

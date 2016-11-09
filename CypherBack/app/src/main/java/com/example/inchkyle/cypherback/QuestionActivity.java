@@ -3,6 +3,13 @@ package com.example.inchkyle.cypherback;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by inchkyle on 11/3/16.
@@ -17,15 +24,49 @@ public class QuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.questions_screen);
 
-        System.out.println("I'm in the q act");
         Intent home_intent = getIntent();
 
         if (home_intent != null) {
-
             user = (User) home_intent.getSerializableExtra("User");
-            user.set_locations();
 
         }
+        TextView textView = (TextView) findViewById(R.id.textView);
 
+        //If location barcode is equal to the scanned barcode we are looking at location questions
+        if (user.location_barcode.equals(user.current_barcode)) {
+            textView.setText("Location Questions");
+            //Temporary just to get data on there... will be deleted
+            ArrayAdapter<String> itemsAdapter =
+                    new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                            new ArrayList<String>(user.locations.get(
+                                    user.current_barcode).location_question_answer_map.keySet()));
+
+            ListView listview = (ListView)findViewById(R.id.questions_listview);
+            listview.setAdapter(itemsAdapter);
+        }
+        //Otherwise we are looking at an item barcode
+        else {
+            textView.setText("Item Questions");
+            //Temporary just to get data on there... will be deleted
+            ArrayAdapter<String> itemsAdapter =
+                    new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                            new ArrayList<String>(
+                                    user.get_location(user.location_barcode).
+                                            get_item(user.current_barcode).
+                                            item_question_answer_map.keySet()));
+
+
+            ListView listview = (ListView)findViewById(R.id.questions_listview);
+            listview.setAdapter(itemsAdapter);
+
+        }
+    }
+
+    public void confirm_answers(View v) {
+        Intent intent = new Intent(QuestionActivity.this, ItemListActivity.class);
+        intent.putExtra("User", user);
+
+
+        startActivity(intent);
     }
 }

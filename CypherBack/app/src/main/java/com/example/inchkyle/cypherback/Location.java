@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by inchkyle on 11/3/16.
@@ -13,43 +14,113 @@ import java.util.ArrayList;
 
 //Locations -> Items -> Questions
 //Locations also have questions
-public class Location implements Serializable{
+public class Location implements Serializable {
     String json_string;
     String loc_barcode_name;
     String barcode_num;
-    ArrayList<String> location_questions;
 
-    Location(String barcode_num, String loc_barcode_name, String json_string) {
+    HashMap<String, String> location_question_answer_map = new HashMap<>();
+    HashMap<String, Item> items = new HashMap<>();
+
+    ArrayList<String> valid_items = new ArrayList<>();
+    ArrayList<String> item_types = new ArrayList<>();
+
+
+    Location(String barcode_num, String json_string) {
         this.barcode_num = barcode_num;
-        this.loc_barcode_name = loc_barcode_name;
         this.json_string = json_string;
 
     }
-    public String print_items(){
-        String ret_string = "\t-loc_barcode_name: " + loc_barcode_name;
 
-        return ret_string;
-    }
+    public void print_location() {
+        for (HashMap.Entry<String, Item> entry : items.entrySet()) {
+            String key = entry.getKey();
+            Item value = entry.getValue();
 
-    public void populate_location_questions() {
-        try {
-            JSONObject location_json = new JSONObject(this.json_string);
-            JSONArray question_ary = location_json.getJSONArray("loc_questions");
-
-            System.out.println("Populating the question array!");
-
-            //Iterates through questions?
-            for (int i = 0; i < question_ary.length(); i++) {
-                System.out.println(question_ary.get(i).toString());
-            }
+            System.out.println("Barcode: " + key);
+            System.out.println("Type: " + value.item_type + " Admin: " + value.admin);
 
 
         }
-        catch (JSONException e) {
+    }
+
+    //This is where the questions associated with the location itself are populated
+    public void populate_location_questions() {
+        try {
+            JSONArray question_ary = new JSONObject(this.json_string).getJSONArray("loc_questions");
+
+            System.out.println("Populating the question array!");
+
+            //Iterates through questions, places empty string as answer for now
+            for (int i = 0; i < question_ary.length(); i++) {
+                JSONObject question_JSON = new JSONObject(question_ary.get(i).toString());
+                location_question_answer_map.put(question_JSON.get("question_text").toString(), "NA");
+
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
 
+    //This sets the basic information for each item at each location such as name and type
+    //NOTE: this does not populate the questions
+    public void set_items() {
 
+        try {
+            JSONObject json_obj = new JSONObject(json_string);
+            JSONArray json_ary;
+
+            json_ary = json_obj.getJSONArray("items");
+
+            for (int j = 0; j < json_ary.length(); j++) {
+                JSONObject item = new JSONObject(json_ary.get(j).toString());
+
+                String admin = String.valueOf(item.getString("admin"));
+                String item_type = String.valueOf(item.getString("item_type"));
+                String barcode_num = String.valueOf(item.getString("barcode_num"));
+                String user_assigned = String.valueOf(item.getString("user_assigned"));
+
+                valid_items.add(barcode_num);
+                item_types.add(item_type);
+
+                Item i = new Item(barcode_num, item.toString());
+                i.set_admin(admin);
+                i.set_item_type(item_type);
+                i.set_user_assigned(user_assigned);
+
+                this.items.put(barcode_num, i);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //Basic setter for initialization
+    public void set_loc_barcode_name(String name) {
+        this.loc_barcode_name = name;
+    }
+
+    //Gives all of the types of the items so we can display them on the ItemListActivity easily
+    public ArrayList<String> get_item_types() {
+        System.out.println("Getting all of the types!: ");
+
+        for (int i = 0; i < item_types.size(); i++) {
+            System.out.println(item_types.get(i));
+        }
+
+        return item_types;
+
+    }
+
+    public ArrayList<String> get_valid_items() {
+        return valid_items;
+    }
+
+    public Item get_item(String barcode) {
+        return items.get(barcode);
+    }
 }
