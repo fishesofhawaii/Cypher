@@ -34,26 +34,28 @@ public class QuestionActivity extends AppCompatActivity {
 
         //If location barcode is equal to the scanned barcode we are looking at location questions
         if (user.location_barcode.equals(user.current_barcode)) {
-            textView.setText("Location Questions");
+            Location location = user.get_location(user.current_barcode);
+
+            textView.setText(location.loc_barcode_name + " Location Questions " +
+                    "\n(Barcode #" + user.current_barcode + ")");
             //Temporary just to get data on there... will be deleted
             ArrayAdapter<String> itemsAdapter =
                     new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                            new ArrayList<String>(user.locations.get(
-                                    user.current_barcode).location_question_answer_map.keySet()));
+                            new ArrayList<String>(location.location_question_answer_map.keySet()));
 
             ListView listview = (ListView)findViewById(R.id.questions_listview);
             listview.setAdapter(itemsAdapter);
         }
         //Otherwise we are looking at an item barcode
         else {
-            textView.setText("Item Questions");
-            //Temporary just to get data on there... will be deleted
+            Item item = user.get_location(user.location_barcode).get_item(user.current_barcode);
+
+            //example for below : "Fire Extinguisher Questions (Barcode #20)"
+            textView.setText(item.item_type + " Questions \n(Barcode #" + item.barcode_num + ")");
+            //Temporary just to get data on there... will be deleted simply sets an arraylist
             ArrayAdapter<String> itemsAdapter =
                     new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                            new ArrayList<String>(
-                                    user.get_location(user.location_barcode).
-                                            get_item(user.current_barcode).
-                                            item_question_answer_map.keySet()));
+                            new ArrayList<String>(item.item_question_answer_map.keySet()));
 
 
             ListView listview = (ListView)findViewById(R.id.questions_listview);
