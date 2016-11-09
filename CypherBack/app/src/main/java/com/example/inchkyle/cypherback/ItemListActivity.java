@@ -20,7 +20,7 @@ import java.util.ArrayList;
 //to scan or type, then will be redirected to specific item questions
 public class ItemListActivity extends AppCompatActivity {
     User user;
-    String expected_barcode;
+
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
 
     @Override
@@ -49,13 +49,12 @@ public class ItemListActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //This is getting the barcode expected from clicking item on the item in the list
-                expected_barcode = user.get_location(user.location_barcode).get_valid_items().get(position);
+                //set the current barcode to the barcode of the item we clicked in the list
 
+                user.set_current_barcode(user.get_location(user.
+                        location_barcode).get_valid_items().get(position));
                 Intent typeLocation_intent = new Intent(ItemListActivity.this, ScanOrTypeActivity.class);
                 startActivityForResult(typeLocation_intent, BARCODE_METHOD_REQUEST);
-                System.out.println("Scan barcode click");
-
 
             }
         });
@@ -82,7 +81,7 @@ public class ItemListActivity extends AppCompatActivity {
             String barcode = data.getStringExtra("result");
 
             //SO... if the result from the popup is equal to the barcode ID in the database
-            if (expected_barcode.equals(barcode)) {
+            if (user.current_barcode.equals(barcode)) {
 
                 //Need to populate item here
                 user.set_current_barcode(barcode);

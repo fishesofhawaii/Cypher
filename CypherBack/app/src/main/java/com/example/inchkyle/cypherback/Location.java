@@ -49,8 +49,6 @@ public class Location implements Serializable {
         try {
             JSONArray question_ary = new JSONObject(this.json_string).getJSONArray("loc_questions");
 
-            System.out.println("Populating the question array!");
-
             //Iterates through questions, places empty string as answer for now
             for (int i = 0; i < question_ary.length(); i++) {
                 JSONObject question_JSON = new JSONObject(question_ary.get(i).toString());
@@ -106,12 +104,6 @@ public class Location implements Serializable {
 
     //Gives all of the types of the items so we can display them on the ItemListActivity easily
     public ArrayList<String> get_item_types() {
-        System.out.println("Getting all of the types!: ");
-
-        for (int i = 0; i < item_types.size(); i++) {
-            System.out.println(item_types.get(i));
-        }
-
         return item_types;
 
     }
