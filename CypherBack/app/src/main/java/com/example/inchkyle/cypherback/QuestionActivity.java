@@ -34,6 +34,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         //If location barcode is equal to the scanned barcode we are looking at location questions
         if (user.location_barcode.equals(user.current_barcode)) {
+            //Need to change this to try/catch for null pointers
             Location location = user.get_location(user.current_barcode);
 
             textView.setText(location.loc_barcode_name + " Location Questions " +
@@ -48,6 +49,7 @@ public class QuestionActivity extends AppCompatActivity {
         }
         //Otherwise we are looking at an item barcode
         else {
+            //Need to change this to a try/catch for null pointers
             Item item = user.get_location(user.location_barcode).get_item(user.current_barcode);
 
             //example for below : "Fire Extinguisher Questions (Barcode #20)"

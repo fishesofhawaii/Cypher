@@ -34,14 +34,11 @@ public class Item implements Serializable{
         try {
             JSONArray question_ary = new JSONObject(this.json_string).getJSONArray("questions");
 
-            System.out.println("Populating the Items question array!");
-
             //Iterates through questions, places empty string as answer for now
             for (int i = 0; i < question_ary.length(); i++) {
                 JSONObject question_JSON = new JSONObject(question_ary.get(i).toString());
                 item_question_answer_map.put(question_JSON.get("question_text").toString(), "NA");
 
-                System.out.println(question_JSON.get("question_text"));
             }
 
         }

@@ -57,6 +57,8 @@ public class ScanOrTypeActivity extends Activity{
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("result", barcode);
 
+                System.out.println("THE RESULT I GOT WAS : " + barcode);
+
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
@@ -94,6 +96,7 @@ public class ScanOrTypeActivity extends Activity{
 
         //If we have permission to use the Camera use it!
         if (current_permission == PackageManager.PERMISSION_GRANTED) {
+            System.out.println("We have the permissions");
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
 
