@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         params.put("user", payroll_id);
 
         //This is the post with the employee id (the payroll_id)
-        client.post("http://35.11.17.117:8000/questions/questionsbyuser",
+        client.post("http://35.14.84.166:8000/questions/questionsbyuser",
 
                 params, new ResponseHandlerInterface() {
 

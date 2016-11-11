@@ -20,7 +20,7 @@ import org.json.JSONObject;
  */
 
 public class HomeActivity extends AppCompatActivity {
-    static String url = "http://35.11.17.117:8000/questions/questionsbyuser";
+    static String url = "http://35.14.84.166:8000/questions/questionsbyuser";
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
 
     User user;
