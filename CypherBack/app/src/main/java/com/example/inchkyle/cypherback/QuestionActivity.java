@@ -39,13 +39,17 @@ public class QuestionActivity extends AppCompatActivity {
 
             textView.setText(location.loc_barcode_name + " Location Questions " +
                     "\n(Barcode #" + user.current_barcode + ")");
-            //Temporary just to get data on there... will be deleted
-            ArrayAdapter<String> itemsAdapter =
-                    new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                            new ArrayList<String>(location.location_question_answer_map.keySet()));
 
-            ListView listview = (ListView)findViewById(R.id.questions_listview);
-            listview.setAdapter(itemsAdapter);
+            ListView listview = (ListView) findViewById(R.id.questions_listview);
+            QuestionAdapter adapter = new QuestionAdapter(getApplicationContext(), R.layout.question_layout);
+
+            //This goes through all the questions and adds them to the adapter
+            for (String question : location.location_question_answer_map.keySet()) {
+                QuestionDataProvider provider = new QuestionDataProvider(0, question);
+                adapter.add(provider);
+            }
+
+            listview.setAdapter(adapter);
         }
         //Otherwise we are looking at an item barcode
         else {
@@ -54,14 +58,17 @@ public class QuestionActivity extends AppCompatActivity {
 
             //example for below : "Fire Extinguisher Questions (Barcode #20)"
             textView.setText(item.item_type + " Questions \n(Barcode #" + item.barcode_num + ")");
-            //Temporary just to get data on there... will be deleted simply sets an arraylist
-            ArrayAdapter<String> itemsAdapter =
-                    new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                            new ArrayList<String>(item.item_question_answer_map.keySet()));
-
 
             ListView listview = (ListView)findViewById(R.id.questions_listview);
-            listview.setAdapter(itemsAdapter);
+            QuestionAdapter adapter = new QuestionAdapter(getApplicationContext(), R.layout.question_layout);
+
+            //This goes through all the questions and adds them to the adapter
+            for (String question : item.item_question_answer_map.keySet()) {
+                QuestionDataProvider provider = new QuestionDataProvider(0, question);
+                adapter.add(provider);
+            }
+
+            listview.setAdapter(adapter);
 
         }
     }
@@ -69,7 +76,6 @@ public class QuestionActivity extends AppCompatActivity {
     public void confirm_answers(View v) {
         Intent intent = new Intent(QuestionActivity.this, ItemListActivity.class);
         intent.putExtra("User", user);
-
 
         startActivity(intent);
     }

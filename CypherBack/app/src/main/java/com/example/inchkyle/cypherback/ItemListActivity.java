@@ -67,13 +67,6 @@ public class ItemListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void item_questions(View v) {
-        Intent typeLocation_intent = new Intent(ItemListActivity.this, ScanOrTypeActivity.class);
-        user.set_current_barcode("barcode123");
-
-        startActivityForResult(typeLocation_intent, BARCODE_METHOD_REQUEST);
-
-    }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
 

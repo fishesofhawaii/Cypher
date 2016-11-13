@@ -28,13 +28,13 @@ public class LoginActivity extends AppCompatActivity {
     String json_string;
     Boolean LOGIN_SUCCESS = false;
 
+    String BASE_URL = "http://35.11.17.117:8000";
+
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
 
     }
 
@@ -43,12 +43,11 @@ public class LoginActivity extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
 
-//        params.put("question_text", q);
         params.put("user", payroll_id);
 
+        String POST_address = BASE_URL + "/questions/questionsbyuser";
         //This is the post with the employee id (the payroll_id)
-        client.post("http://35.11.17.117:8000/questions/questionsbyuser",
-
+        client.post(POST_address,
                 params, new ResponseHandlerInterface() {
 
             @Override
@@ -166,12 +165,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     //If the post was successful (employee exists) then we can login to the app
     public void go_to_home() {
 
         Intent login_intent = new Intent(LoginActivity.this, HomeActivity.class);
         user = new User(payroll_id, json_string);
+        user.set_BASE_URL(BASE_URL);
 
         login_intent.putExtra("User", user);
 

@@ -15,6 +15,8 @@ import java.util.HashMap;
 //User is the biggest class. It contains the data that this employee needs.
 //User has locations assigned, locations have items, and items have questions.
 public class User implements Serializable{
+    String BASE_URL;
+
     String payroll_id;
     String employee_json;
     String current_barcode;
@@ -92,5 +94,9 @@ public class User implements Serializable{
 
     public Location get_location(String barcode) {
         return locations.get(barcode);
+    }
+
+    public void set_BASE_URL(String url) {
+
     }
 }

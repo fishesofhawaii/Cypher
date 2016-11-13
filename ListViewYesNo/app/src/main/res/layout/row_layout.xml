@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:src="@mipmap/aed"/>
+
+    <TextView
+        android:text="This would be the question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/itemImage"
+        android:layout_toEndOf="@+id/itemImage"
+        android:layout_marginBottom="26dp"
+        android:id="@+id/questionText"
+        android:textColor="@android:color/black" />
+
+    <RadioButton
+        android:text="Yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yesButton"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="61dp"
+        android:layout_below="@+id/itemImage"
+        android:layout_alignParentStart="true"
+        android:textColor="@android:color/black"
+        app:buttonTint="@android:color/black" />
+
+    <RadioButton
+        android:text="No"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/noButton"
+        android:layout_marginEnd="98dp"
+        android:layout_alignBaseline="@+id/yesButton"
+        android:layout_alignBottom="@+id/yesButton"
+        android:layout_alignParentEnd="true"
+        app:buttonTint="@android:color/black"
+        android:textColor="@android:color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/yesButton"
+        android:background="@color/colorPrimaryDark">
+    </View>
+
+</RelativeLayout>

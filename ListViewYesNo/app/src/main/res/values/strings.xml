@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ListView YesNo</string>
+
+    <string-array name="items">
+        <item>Fire Extinguisher</item>
+        <item>AED</item>
+        <item>Ladder</item>
+
+    </string-array>
+</resources>
