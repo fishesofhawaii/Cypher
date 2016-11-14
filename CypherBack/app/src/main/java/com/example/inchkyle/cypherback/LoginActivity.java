@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     String json_string;
     Boolean LOGIN_SUCCESS = false;
 
-    String BASE_URL = "http://10.0.0.117:8000";
+    String BASE_URL = "http://35.12.212.247:8000";
 
     User user;
     @Override

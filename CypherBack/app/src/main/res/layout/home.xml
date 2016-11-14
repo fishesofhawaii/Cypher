@@ -1,117 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ArcelorMittalPaleGray"
     android:paddingTop="16dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:paddingRight="16dp"
+    tools:context=".HomeActivity">
 
 
-    <Button
-        android:text="Update"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/sync_btn"
-        android:onClick="update_click"
-        android:gravity="bottom|center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/home_scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:scrollbars="vertical"
-        android:foregroundGravity="bottom"
-        android:layout_below="@+id/navigation_layout"
-        android:layout_alignParentStart="true">
-
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="1">
-
-            <!--Content for scrolling-->
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:text="City Area \nPlant Building" />
-            </TableRow>
-
-
-        </TableLayout>
-
-
-    </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
         android:id="@+id/navigation_layout"
@@ -139,15 +38,51 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
 
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/navigation_layout"
+        tools:context=".HomeActivity"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/upcoming"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Upcoming Deadlines"
             android:textSize="24sp"
-            android:layout_below="@+id/scan_barcode_btn"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:paddingBottom="16dp"/>
 
-    </RelativeLayout>
+        <ListView
+            android:id="@+id/mobile_list"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:scrollbars="vertical"
+            android:orientation="vertical"
+            android:foregroundGravity="bottom"
+            android:layout_below="@id/upcoming"
+            android:layout_alignParentStart="true">
+        </ListView>
+
+
+    </LinearLayout>
+
+
+
+
+    <Button
+        android:text="Update"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/sync_btn"
+        android:onClick="update_click"
+        android:gravity="bottom|center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 
 
