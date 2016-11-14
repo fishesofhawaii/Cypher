@@ -36,12 +36,10 @@ public class ItemListActivity extends AppCompatActivity {
 
         }
 
-
-
         ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                         new ArrayList<String>(user.get_location(
-                                user.location_barcode).get_item_types()));
+                                user.location_barcode).get_device_names()));
 
         ListView listview = (ListView)findViewById(R.id.item_listview);
         listview.setAdapter(itemsAdapter);
@@ -50,7 +48,6 @@ public class ItemListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //set the current barcode to the barcode of the item we clicked in the list
-
                 user.set_current_barcode(user.get_location(user.
                         location_barcode).get_valid_items().get(position));
                 Intent typeLocation_intent = new Intent(ItemListActivity.this, ScanOrTypeActivity.class);
@@ -77,8 +74,6 @@ public class ItemListActivity extends AppCompatActivity {
             if (user.current_barcode.equals(barcode)) {
 
                 //Need to populate item here
-                user.set_current_barcode(barcode);
-
                 user.get_location(user.location_barcode).get_item(barcode).populate_item_questions();
                 //Start activity that pulls up location questions
                 Intent intent = new Intent(ItemListActivity.this, QuestionActivity.class);

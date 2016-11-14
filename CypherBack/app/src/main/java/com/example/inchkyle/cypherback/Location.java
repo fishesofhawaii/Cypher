@@ -18,12 +18,14 @@ public class Location implements Serializable {
     String json_string;
     String loc_barcode_name;
     String barcode_num;
+    int location_id;
+    String user_assigned;
 
     HashMap<String, String> location_question_answer_map = new HashMap<>();
     HashMap<String, Item> items = new HashMap<>();
 
     ArrayList<String> valid_items = new ArrayList<>();
-    ArrayList<String> item_types = new ArrayList<>();
+    ArrayList<String> device_names = new ArrayList<>();
 
 
     Location(String barcode_num, String json_string) {
@@ -38,7 +40,7 @@ public class Location implements Serializable {
             Item value = entry.getValue();
 
             System.out.println("Barcode: " + key);
-            System.out.println("Type: " + value.item_type + " Admin: " + value.admin);
+            System.out.println("Type: " + value.device_name);
 
 
         }
@@ -69,23 +71,30 @@ public class Location implements Serializable {
             JSONObject json_obj = new JSONObject(json_string);
             JSONArray json_ary;
 
-            json_ary = json_obj.getJSONArray("items");
+            json_ary = json_obj.getJSONArray("devices");
 
             for (int j = 0; j < json_ary.length(); j++) {
                 JSONObject item = new JSONObject(json_ary.get(j).toString());
 
-                String admin = String.valueOf(item.getString("admin"));
-                String item_type = String.valueOf(item.getString("item_type"));
-                String barcode_num = String.valueOf(item.getString("barcode_num"));
-                String user_assigned = String.valueOf(item.getString("user_assigned"));
+                int model_num = item.getInt("model_num");
+                String manu = item.get("manu").toString();
+                String type_equip = item.get("type_equip").toString();
+                String device_name = item.get("device_name").toString();
+
+                JSONArray barcode_array = item.getJSONArray("barcodes");
+
+//                String item_type = String.valueOf(item.getString("item_type"));
+//                String barcode_num = String.valueOf(item.getString("barcode_num"));
+//                String user_assigned = String.valueOf(item.getString("user_assigned"));
 
                 valid_items.add(barcode_num);
-                item_types.add(item_type);
+                device_names.add(device_name);
 
                 Item i = new Item(barcode_num, item.toString());
-                i.set_admin(admin);
-                i.set_item_type(item_type);
-                i.set_user_assigned(user_assigned);
+                i.set_model_num(model_num);
+                i.set_manu(manu);
+                i.set_type_equip(type_equip);
+                i.set_possible_barcodes(null); //Change this. Needs to be Arraylist<string>
 
                 this.items.put(barcode_num, i);
 
@@ -103,9 +112,8 @@ public class Location implements Serializable {
     }
 
     //Gives all of the types of the items so we can display them on the ItemListActivity easily
-    public ArrayList<String> get_item_types() {
-        return item_types;
-
+    public ArrayList<String> get_device_names() {
+        return device_names;
     }
 
     public ArrayList<String> get_valid_items() {
@@ -114,5 +122,13 @@ public class Location implements Serializable {
 
     public Item get_item(String barcode) {
         return items.get(barcode);
+    }
+
+    public void set_location_id(int _location_id) {
+        this.location_id = _location_id;
+    }
+
+    public void set_user_assigned(String _user_assigned) {
+        this.user_assigned = _user_assigned;
     }
 }

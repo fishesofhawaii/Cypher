@@ -7,28 +7,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@+id/yesButton"
+        android:layout_below="@+id/radio_group"
         android:background="@color/colorPrimaryDark"
         android:id="@+id/view"></View>
-
-    <RadioButton
-        android:text="Yes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="150dp"
-        android:id="@+id/yesButton" />
-
-    <RadioButton
-        android:text="No"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/yesButton"
-        android:layout_toEndOf="@+id/yesButton"
-        android:layout_marginStart="150dp"
-        android:id="@+id/noButton" />
 
     <TextView
         android:text="This would be the question"
@@ -45,6 +26,39 @@
         android:layout_height="100dp"
         app:srcCompat="@mipmap/ic_launcher"
         android:id="@+id/questionImage"
-        android:layout_above="@+id/noButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/questionText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="31dp" />
+
+    <RadioGroup
+        android:orientation="horizontal"
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/questionImage"
+        android:layout_alignParentStart="true"
+        android:layout_height="50dp">
+
+        <RadioButton
+            android:text="Yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="130dp"
+            android:id="@+id/yesButton"
+            android:textSize="40sp" />
+
+        <RadioButton
+            android:text="No"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/yesButton"
+            android:layout_toEndOf="@+id/yesButton"
+            android:id="@+id/noButton"
+            android:layout_marginLeft="130dp"
+            android:textSize="40sp" />
+
+
+    </RadioGroup>
 </RelativeLayout>

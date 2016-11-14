@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,6 +23,7 @@ import java.util.List;
 
 public class QuestionAdapter extends ArrayAdapter {
     List list = new ArrayList();
+    HashMap<String, String> question_answer_map = new HashMap<>();
 
     public QuestionAdapter(Context context, int resource) {
         super(context, resource);
@@ -28,8 +32,7 @@ public class QuestionAdapter extends ArrayAdapter {
     static class DataHandler {
         ImageView image;
         TextView q;
-        RadioButton yes_button;
-        RadioButton no_button;
+        RadioGroup radioGroup;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class QuestionAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row;
         row = convertView;
-        DataHandler handler;
+        final DataHandler handler;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.getContext().
@@ -65,8 +68,7 @@ public class QuestionAdapter extends ArrayAdapter {
             handler = new DataHandler();
             handler.image = (ImageView) row.findViewById(R.id.questionImage);
             handler.q = (TextView) row.findViewById(R.id.questionText);
-            handler.yes_button = (RadioButton) row.findViewById(R.id.yesButton);
-            handler.no_button = (RadioButton) row.findViewById(R.id.noButton);
+            handler.radioGroup = (RadioGroup) row.findViewById(R.id.radio_group);
 
             row.setTag(handler);
         }
@@ -75,15 +77,34 @@ public class QuestionAdapter extends ArrayAdapter {
 
         }
 
-        QuestionDataProvider provider;
+        final QuestionDataProvider provider;
         provider = (QuestionDataProvider) this.getItem(position);
-
-        System.out.println("provider question!!!: " + provider.getQuestion());
 
         handler.q.setText(provider.getQuestion().toString());
         handler.image.setImageResource(provider.getResource());
-        handler.yes_button.setChecked(false);
-        handler.no_button.setChecked(false);
+
+
+        handler.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                RadioButton selected_button = (RadioButton) group.findViewById(checkedId);
+
+                if (selected_button.equals("Yes")) {
+                    System.out.println(handler.q.getText() + " : " + "TRUE");
+                }
+                else if (selected_button.equals("No")) {
+                    System.out.println(handler.q.getText() + " : " + "FALSE");
+
+                }
+                else {
+                    System.out.println(checkedId);
+                    System.out.println("Not bueno");
+                }
+            }
+        });
+
+
 
         return row;
     }

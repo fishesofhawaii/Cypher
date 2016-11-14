@@ -13,15 +13,17 @@ import java.util.HashMap;
  */
 
 public class Item implements Serializable{
-    String admin;
-    String item_type;
+    int model_num;
+    String manu;
+    String type_equip;
+    String device_name;
+
     String barcode_num;
-    String user_assigned;
 
     String json_string;
 
     HashMap<String, String> item_question_answer_map = new HashMap<>();
-
+    ArrayList<String> possible_barcodes;
 
     Item(String barcode_num, String json_string) {
         this.barcode_num = barcode_num;
@@ -48,14 +50,20 @@ public class Item implements Serializable{
 
     }
 
-    public void set_admin(String a) {
-        this.admin = a;
-    }
-    public void set_item_type(String i_name) {
-        this.item_type = i_name;
-    }
-    public void set_user_assigned(String name) {
-        this.user_assigned = name;
+
+    public void set_type_equip(String _type_equip) {
+        this.type_equip = _type_equip;
     }
 
+    public void set_manu(String _manu) {
+        this.manu = _manu;
+    }
+
+    public void set_model_num(int _model_num) {
+        this.model_num = _model_num;
+    }
+
+    public void set_possible_barcodes(ArrayList<String> _possible_barcodes) {
+        this.possible_barcodes = _possible_barcodes;
+    }
 }

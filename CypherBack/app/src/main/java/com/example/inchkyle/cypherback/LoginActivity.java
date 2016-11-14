@@ -28,8 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     String json_string;
     Boolean LOGIN_SUCCESS = false;
 
+//    String BASE_URL = "http://35.12.211.195:8000";
     String BASE_URL = "http://35.11.17.117:8000";
-
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
         params.put("user", payroll_id);
 
-        String POST_address = BASE_URL + "/questions/questionsbyuser";
+        String POST_address = BASE_URL + "/questions/questionsbyuser/";
         //This is the post with the employee id (the payroll_id)
         client.post(POST_address,
                 params, new ResponseHandlerInterface() {

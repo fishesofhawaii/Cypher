@@ -39,7 +39,6 @@ public class ScanOrTypeActivity extends Activity{
         int width = dm.widthPixels;
 
         getWindow().setLayout((int) (width*.8), (int) (height*.8));
-        System.out.println("pop it up!");
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -57,8 +56,6 @@ public class ScanOrTypeActivity extends Activity{
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("result", barcode);
 
-                System.out.println("THE RESULT I GOT WAS : " + barcode);
-
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
@@ -66,7 +63,6 @@ public class ScanOrTypeActivity extends Activity{
         else {
 
             //BELOW IS FOR THE CAMERA
-            System.out.println("Request code : " + requestCode + " Result Code : " + resultCode);
             //retrieve scan result
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 

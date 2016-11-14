@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class QuestionActivity extends AppCompatActivity {
             Item item = user.get_location(user.location_barcode).get_item(user.current_barcode);
 
             //example for below : "Fire Extinguisher Questions (Barcode #20)"
-            textView.setText(item.item_type + " Questions \n(Barcode #" + item.barcode_num + ")");
+            textView.setText(item.device_name + " Questions \n(Barcode #" + item.barcode_num + ")");
 
             ListView listview = (ListView)findViewById(R.id.questions_listview);
             QuestionAdapter adapter = new QuestionAdapter(getApplicationContext(), R.layout.question_layout);
@@ -77,6 +78,25 @@ public class QuestionActivity extends AppCompatActivity {
         Intent intent = new Intent(QuestionActivity.this, ItemListActivity.class);
         intent.putExtra("User", user);
 
+        ListView listView = (ListView) findViewById(R.id.questions_listview);
+        QuestionAdapter adapter = (QuestionAdapter) listView.getAdapter();
+
+//        for (int i = 0; i < adapter.getCount(); i++){
+////            QuestionDataProvider provider = (QuestionDataProvider) adapter.getItem(i);
+////
+////            System.out.println("Question is " + i + " : " + provider.getQuestion());
+//            View row = adapter.getView(i, listView.getChildAt(i), listView);
+//
+//            RadioButton yesButton = (RadioButton) row.findViewById(R.id.yesButton);
+//            RadioButton noButton = (RadioButton) row.findViewById(R.id.noButton);
+//            TextView questionText = (TextView) row.findViewById(R.id.questionText);
+//
+//
+//        }
+        //Adapter.getAnsers
+
+
+        System.out.println("Going on...");
         startActivity(intent);
     }
 }
