@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ArcelorMittalLightBlue">
-
-    <Button
-        android:text="Click Here to submit all answers"
-        android:layout_width="450dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="29dp"
-        android:id="@+id/confirm_btn"
-        android:onClick="submit_answers"
-        android:backgroundTint="@color/ArcelorMittalLightGreen" />
+    android:background="@color/ArcelorMittalLightBlue"
+    tools:context=".ItemListActivity">
 
     <TextView
         android:text="This will be replaced by a Recycle View!"
@@ -30,8 +22,38 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
-        android:layout_height="600dp"
+        android:layout_height="wrap_content"
         android:id="@+id/item_listview"
         android:dividerHeight="40dp"
         android:clickable="true" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/item_listview">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+
+    </RelativeLayout>
+
+
+
+    <Button
+        android:text="Click Here to submit all answers"
+        android:layout_width="450dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="29dp"
+        android:id="@+id/confirm_btn"
+        android:onClick="submit_answers"
+        android:backgroundTint="@color/ArcelorMittalLightGreen" />
+
+
+
 </RelativeLayout>

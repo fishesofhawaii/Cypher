@@ -3,11 +3,13 @@ package com.example.inchkyle.cypherback;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,10 +25,25 @@ public class ItemListActivity extends AppCompatActivity {
 
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
 
+    // RecyclerView
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private static String LOG_TAG = "ItemListActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.items_screen);
+
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new RVAdapter(getDataSet());
+        mRecyclerView.setAdapter(mAdapter);
+
 
         // BELOW is from LOGIN
         Intent home_intent = getIntent();
@@ -37,7 +54,7 @@ public class ItemListActivity extends AppCompatActivity {
         }
 
 
-
+//        Replace with cardview
         ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                         new ArrayList<String>(user.get_location(
@@ -59,6 +76,30 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((RVAdapter) mAdapter).setOnItemClickListener(new RVAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.i(LOG_TAG, " Clicked on Item " + position);
+            }
+        });
+    }
+
+    private ArrayList<Item.Object> getDataSet() {
+        ArrayList results = new ArrayList<Item.Object>();
+        for (int index = 0; index < 5; index++) {
+            Item.Object obj = new Item.Object("Some Primary Text " + index,
+                    "Secondary " + index);
+            results.add(index, obj);
+        }
+        return results;
     }
 
     public void submit_answers(View v) {
