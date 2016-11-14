@@ -32,6 +32,8 @@ public class ScanOrTypeActivity extends Activity{
 
         setContentView(R.layout.scan_or_type_popup);
 
+
+
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 

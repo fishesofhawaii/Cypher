@@ -1,12 +1,15 @@
 package com.example.inchkyle.cypherback;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -14,6 +17,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.os.Vibrator;
 
 /**
  * Created by inchkyle on 10/31/16.
@@ -22,12 +26,33 @@ import org.json.JSONObject;
 public class HomeActivity extends AppCompatActivity {
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
 
+    // Array of strings... 
+    String[] mobileArray = {"location", "location", "location", "location",
+            "location","location","location","location",
+            "location","location","location","location",
+            "location","location","location","location",
+            "location","location","location","location",
+            "location","location","location","location",
+            "location","location","location","location",};
+
     User user;
+
+    Vibrator v;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,
+                R.layout.activity_upcoming_view, mobileArray);
+
+        ListView listView = (ListView) findViewById(R.id.mobile_list);
+        listView.setAdapter(adapter);
+
+        v = (Vibrator) this.getApplicationContext().
+                getSystemService(Context.VIBRATOR_SERVICE);
 
         // BELOW is from LOGIN
         Intent home_intent = getIntent();
@@ -82,6 +107,8 @@ public class HomeActivity extends AppCompatActivity {
             else {
                 Toast.makeText(this, "This Location is not on your route!" +
                         "\nScan a Location that is on your route!", Toast.LENGTH_SHORT).show();
+                // Vibrate for 500 milliseconds
+                v.vibrate(500);
             }
         }
 
