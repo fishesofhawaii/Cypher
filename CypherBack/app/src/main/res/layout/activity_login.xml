@@ -54,8 +54,8 @@
             android:text="Login"
             android:onClick="log_in"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:textColorLink="@android:color/holo_red_dark"
-            android:background="@android:color/holo_red_dark" />
+            android:textColorLink="@color/AMRedDark"
+            android:background="@color/AMRedDark" />
     </LinearLayout>
 
 

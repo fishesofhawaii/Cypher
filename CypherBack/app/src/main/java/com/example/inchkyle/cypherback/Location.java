@@ -115,4 +115,21 @@ public class Location implements Serializable {
     public Item get_item(String barcode) {
         return items.get(barcode);
     }
+
+
+
+    public static class Object {
+        public String date;
+        public String city;
+        public String plant;
+
+        public Object(String date, String city, String plant) {
+            this.date = date;
+            this.city = city;
+            this.plant = plant;
+        }
+    }
+
+
+
 }
