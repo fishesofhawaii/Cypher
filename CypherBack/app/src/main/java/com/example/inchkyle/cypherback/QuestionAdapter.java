@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -32,7 +33,9 @@ public class QuestionAdapter extends ArrayAdapter {
     public class DataHandler {
         ImageView image;
         TextView q;
-        RadioGroup radioGroup;
+        TextView response;
+        Button yesButton;
+        Button noButton;
     }
 
     @Override
@@ -60,7 +63,6 @@ public class QuestionAdapter extends ArrayAdapter {
         final DataHandler handler;
 
         if (convertView == null) {
-            System.out.println("IT WAS NULL THIS TIME " + position);
             LayoutInflater inflater = (LayoutInflater) this.getContext().
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -69,12 +71,13 @@ public class QuestionAdapter extends ArrayAdapter {
             handler = new DataHandler();
             handler.image = (ImageView) row.findViewById(R.id.questionImage);
             handler.q = (TextView) row.findViewById(R.id.questionText);
-            handler.radioGroup = (RadioGroup) row.findViewById(R.id.radio_group);
+            handler.yesButton = (Button) row.findViewById(R.id.yesButton);
+            handler.noButton = (Button) row.findViewById(R.id.noButton);
+            handler.response = (TextView) row.findViewById(R.id.responseText);
 
             row.setTag(handler);
         }
         else {
-            System.out.println("IT WAS NOT NULL! A MIRACLE " + position);
             handler = (DataHandler) row.getTag();
 
         }
@@ -82,53 +85,52 @@ public class QuestionAdapter extends ArrayAdapter {
         final QuestionDataProvider provider;
         provider = (QuestionDataProvider) this.getItem(position);
 
-        handler.q.setText(provider.getQuestion().toString());
+        final String question = provider.getQuestion().toString();
+
+        //If the question answer map doesnt have this question, add it as not answered
+        if (!question_answer_map.containsKey(question)){
+            question_answer_map.put(question, "NA");
+        }
+
+        handler.q.setText(question);
         handler.image.setImageResource(provider.getResource());
 
-        RadioButton yes = (RadioButton) handler.radioGroup.findViewById(R.id.yesButton);
-        RadioButton no = (RadioButton) handler.radioGroup.findViewById(R.id.noButton);
-
-        if (provider.getAnswer().equals("NA")) {
-            //This is the case it hasnt been answered, both buttons are off
-            yes.setChecked(false);
-            no.setChecked(false);
+        if (provider.getAnswer().equals("1")) {
+            handler.response.setText("YES");
         }
-        else if (provider.getAnswer().equals("1")){
-            //This is the case that the row is set to YES
-            yes.setChecked(true);
-            no.setChecked(false);
+        else if (provider.getAnswer().equals("0")) {
+            handler.response.setText("NO");
         }
-        else if (provider.getAnswer().equals("0")){
-            //This is the case that the row is set to NO
-            yes.setChecked(false);
-            no.setChecked(true);
+        else if (provider.getAnswer().equals("NA")) {
+            handler.response.setText("");
+        }
+        else {
+            System.out.println("This isnt good");
         }
 
-        handler.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        handler.yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onClick(View v) {
+                handler.response.setText("YES");
+                provider.setAnswer("1");
+                question_answer_map.put(question, "1");
+            }
+        });
+        handler.noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handler.response.setText("NO");
+                provider.setAnswer("0");
+                question_answer_map.put(question, "0");
 
-                RadioButton selected_button = (RadioButton) group.findViewById(checkedId);
-                System.out.println(selected_button.getText()  + "------------");
-
-                if (selected_button.getText().equals(R.id.yesButton)) {
-                    System.out.println(handler.q.getText() + " : " + "TRUE");
-                    provider.setAnswer("1");
-                }
-                else if (selected_button.equals(R.id.noButton)) {
-                    System.out.println(handler.q.getText() + " : " + "FALSE");
-                    provider.setAnswer("0");
-
-                }
-                else {
-                    System.out.println(checkedId);
-                    System.out.println("Not bueno");
-                }
             }
         });
 
 
         return row;
+    }
+    public HashMap<String, String> get_question_answer_map() {
+        return question_answer_map;
     }
 
 }

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by inchkyle on 11/3/16.
@@ -101,6 +102,14 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     public void submit_answers(View v) {
+        Location location = user.get_location(user.location_barcode);
+        HashMap<String, String> location_answers = location.get_location_question_answer_map();
+
+        for (HashMap.Entry<String, String> entry : location_answers.entrySet()) {
+            System.out.println("Q : " + entry.getKey() + "\tA : " + entry.getValue());
+        }
+
+
         Intent intent = new Intent(ItemListActivity.this, HomeActivity.class);
         intent.putExtra("User", user);
         startActivity(intent);

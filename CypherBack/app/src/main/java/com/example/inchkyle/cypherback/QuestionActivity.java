@@ -8,8 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -48,7 +50,6 @@ public class QuestionActivity extends AppCompatActivity {
             for (String question : location.location_question_answer_map.keySet()) {
                 QuestionDataProvider provider = new QuestionDataProvider(0, question, "NA");
                 adapter.add(provider);
-                System.out.println("```" + question);
             }
 
             listview.setAdapter(adapter);
@@ -76,28 +77,28 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     public void confirm_answers(View v) {
-        Intent intent = new Intent(QuestionActivity.this, ItemListActivity.class);
-        intent.putExtra("User", user);
 
         ListView listView = (ListView) findViewById(R.id.questions_listview);
         QuestionAdapter adapter = (QuestionAdapter) listView.getAdapter();
 
-//        for (int i = 0; i < adapter.getCount(); i++){
-////            QuestionDataProvider provider = (QuestionDataProvider) adapter.getItem(i);
-////
-////            System.out.println("Question is " + i + " : " + provider.getQuestion());
-//            View row = adapter.getView(i, listView.getChildAt(i), listView);
-//
-//            RadioButton yesButton = (RadioButton) row.findViewById(R.id.yesButton);
-//            RadioButton noButton = (RadioButton) row.findViewById(R.id.noButton);
-//            TextView questionText = (TextView) row.findViewById(R.id.questionText);
-//
-//
-//        }
-        //Adapter.getAnsers
+        HashMap<String, String> answers = adapter.get_question_answer_map();
+
+        // If there is an unanswered question tell the user
+        if (answers.containsValue("NA")) {
+            Toast.makeText(this, "Please answer ALL of the questions",
+                    Toast.LENGTH_SHORT).show();
+        }
+        //Otherwise we can send it forward to the item list
+        else {
+            //Sets all the answers that we just put in place
+            user.get_location(user.location_barcode).set_location_question_answer_map(answers);
+
+            Intent intent = new Intent(QuestionActivity.this, ItemListActivity.class);
+            intent.putExtra("User", user);
+
+            startActivity(intent);
+        }
 
 
-        System.out.println("Going on...");
-        startActivity(intent);
     }
 }

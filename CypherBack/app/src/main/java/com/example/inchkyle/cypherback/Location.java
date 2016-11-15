@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by inchkyle on 11/3/16.
@@ -130,5 +131,19 @@ public class Location implements Serializable {
 
     public void set_user_assigned(String _user_assigned) {
         this.user_assigned = _user_assigned;
+    }
+
+    public void set_location_question_answer_map(HashMap<String, String> qs_as) {
+
+//        for (HashMap.Entry<String, String> entry : qs_as.entrySet()) {
+//            System.out.println("Question: " + entry.getKey() + "\nAnswer: " + entry.getValue());
+//        }
+
+
+        this.location_question_answer_map = qs_as;
+    }
+
+    public HashMap<String, String> get_location_question_answer_map() {
+        return this.location_question_answer_map;
     }
 }
