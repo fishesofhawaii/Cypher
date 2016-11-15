@@ -29,7 +29,7 @@ public class QuestionAdapter extends ArrayAdapter {
         super(context, resource);
     }
 
-    static class DataHandler {
+    public class DataHandler {
         ImageView image;
         TextView q;
         RadioGroup radioGroup;
@@ -60,6 +60,7 @@ public class QuestionAdapter extends ArrayAdapter {
         final DataHandler handler;
 
         if (convertView == null) {
+            System.out.println("IT WAS NULL THIS TIME " + position);
             LayoutInflater inflater = (LayoutInflater) this.getContext().
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -73,6 +74,7 @@ public class QuestionAdapter extends ArrayAdapter {
             row.setTag(handler);
         }
         else {
+            System.out.println("IT WAS NOT NULL! A MIRACLE " + position);
             handler = (DataHandler) row.getTag();
 
         }
@@ -83,18 +85,39 @@ public class QuestionAdapter extends ArrayAdapter {
         handler.q.setText(provider.getQuestion().toString());
         handler.image.setImageResource(provider.getResource());
 
+        RadioButton yes = (RadioButton) handler.radioGroup.findViewById(R.id.yesButton);
+        RadioButton no = (RadioButton) handler.radioGroup.findViewById(R.id.noButton);
+
+        if (provider.getAnswer().equals("NA")) {
+            //This is the case it hasnt been answered, both buttons are off
+            yes.setChecked(false);
+            no.setChecked(false);
+        }
+        else if (provider.getAnswer().equals("1")){
+            //This is the case that the row is set to YES
+            yes.setChecked(true);
+            no.setChecked(false);
+        }
+        else if (provider.getAnswer().equals("0")){
+            //This is the case that the row is set to NO
+            yes.setChecked(false);
+            no.setChecked(true);
+        }
 
         handler.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 RadioButton selected_button = (RadioButton) group.findViewById(checkedId);
+                System.out.println(selected_button.getText()  + "------------");
 
-                if (selected_button.equals("Yes")) {
+                if (selected_button.getText().equals(R.id.yesButton)) {
                     System.out.println(handler.q.getText() + " : " + "TRUE");
+                    provider.setAnswer("1");
                 }
-                else if (selected_button.equals("No")) {
+                else if (selected_button.equals(R.id.noButton)) {
                     System.out.println(handler.q.getText() + " : " + "FALSE");
+                    provider.setAnswer("0");
 
                 }
                 else {
@@ -103,7 +126,6 @@ public class QuestionAdapter extends ArrayAdapter {
                 }
             }
         });
-
 
 
         return row;

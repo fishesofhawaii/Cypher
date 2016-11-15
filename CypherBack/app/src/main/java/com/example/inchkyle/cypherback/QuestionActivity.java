@@ -46,8 +46,9 @@ public class QuestionActivity extends AppCompatActivity {
 
             //This goes through all the questions and adds them to the adapter
             for (String question : location.location_question_answer_map.keySet()) {
-                QuestionDataProvider provider = new QuestionDataProvider(0, question);
+                QuestionDataProvider provider = new QuestionDataProvider(0, question, "NA");
                 adapter.add(provider);
+                System.out.println("```" + question);
             }
 
             listview.setAdapter(adapter);
@@ -65,7 +66,7 @@ public class QuestionActivity extends AppCompatActivity {
 
             //This goes through all the questions and adds them to the adapter
             for (String question : item.item_question_answer_map.keySet()) {
-                QuestionDataProvider provider = new QuestionDataProvider(0, question);
+                QuestionDataProvider provider = new QuestionDataProvider(0, question, "NA");
                 adapter.add(provider);
             }
 
