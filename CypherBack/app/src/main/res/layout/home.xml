@@ -4,39 +4,42 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ArcelorMittalPaleGray"
-    android:paddingTop="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:background="@color/white"
     tools:context=".HomeActivity">
 
 
 
     <RelativeLayout
         android:id="@+id/navigation_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="bottom">
+        android:layout_width="fill_parent"
+        android:layout_height="375dp"
+        android:background="#CF1703"
+        android:gravity="center">
 
         <Button
             android:text="Scan Barcode Location"
             android:id="@+id/scan_barcode_btn"
             android:onClick="scan_barcode_click"
-            android:layout_width="260dp"
-            android:layout_height="350dp"
+            android:layout_width="280dp"
+            android:layout_height="300dp"
+            android:textSize="24dp"
             android:drawableBottom="@drawable/barcode"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:padding="16dp"/>
 
         <Button
             android:text="History"
             android:id="@+id/history_btn"
             android:onClick="history_click"
-            android:layout_width="260dp"
-            android:layout_height="350dp"
+            android:layout_width="280dp"
+            android:layout_height="300dp"
+            android:textSize="24dp"
             android:drawableBottom="@drawable/history"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:drawablePadding="16dp"
+            android:padding="16dp"/>
 
     </RelativeLayout>
 
@@ -53,9 +56,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Upcoming Deadlines"
+            android:textColor="@color/white"
+            android:background="#222222"
             android:textSize="24sp"
             android:layout_alignParentStart="true"
-            android:paddingBottom="16dp"/>
+            android:padding="16dp"/>
 
         <ListView
             android:id="@+id/mobile_list"

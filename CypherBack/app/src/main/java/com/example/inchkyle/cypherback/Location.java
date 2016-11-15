@@ -178,4 +178,21 @@ public class Location implements Serializable {
         System.out.println("TIME : " + _timestamp);
         this.timestamp = _timestamp;
     }
+
+
+
+    public static class Object {
+        public String date;
+        public String city;
+        public String plant;
+
+        public Object(String date, String city, String plant) {
+            this.date = date;
+            this.city = city;
+            this.plant = plant;
+        }
+    }
+
+
+
 }

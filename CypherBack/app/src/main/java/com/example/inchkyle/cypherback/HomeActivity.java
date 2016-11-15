@@ -19,37 +19,41 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.os.Vibrator;
 
+import java.util.ArrayList;
+
+import static android.R.id.list;
+
 /**
  * Created by inchkyle on 10/31/16.
  */
 
 public class HomeActivity extends AppCompatActivity {
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
-
-    // Array of strings... 
-    String[] mobileArray = {"location", "location", "location", "location",
-            "location","location","location","location",
-            "location","location","location","location",
-            "location","location","location","location",
-            "location","location","location","location",
-            "location","location","location","location",
-            "location","location","location","location",};
-
     User user;
 
     Vibrator v;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_upcoming_view, mobileArray);
 
+        // Construct the data source
+        ArrayList<Location.Object> arrayOfLocations = new ArrayList<Location.Object>();
+        // Create the adapter to convert the array to views
+        LocationAdapter adapter = new LocationAdapter(this, arrayOfLocations);
+        // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.mobile_list);
         listView.setAdapter(adapter);
+
+
+        // Add item to adapter
+        Location.Object newLocation = new Location.Object("15 days", "Illinois", "Plant A");
+        adapter.add(newLocation);
+
+
+
 
         v = (Vibrator) this.getApplicationContext().
                 getSystemService(Context.VIBRATOR_SERVICE);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fc4c02</color>
-    <color name="colorPrimaryDark">#3d3935</color>
+    <color name="colorPrimary">#FA321D</color>
+    <color name="colorPrimaryDark">#A30F00</color>
     <color name="colorAccent">#b7b09c</color>
 
     <color name="ArcelorMittalDarkGray">#4b4f54</color>
@@ -18,6 +18,12 @@
 
 
     <color name="white">#ffffff</color>
+
+
+    <color name="AMRed">#FA321D</color>
+    <color name="AMRedDark">#A30F00</color>
+    <color name="AMRedLight">#FF5B49</color>
+    <color name="AMOrange">#FA891D</color>
 
 
 </resources>
