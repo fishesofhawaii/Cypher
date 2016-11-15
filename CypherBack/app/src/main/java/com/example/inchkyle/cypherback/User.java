@@ -108,5 +108,7 @@ public class User implements Serializable{
     public void set_valid_item_barcodes(ArrayList<String> barcodes) {
         this.valid_item_barcodes = barcodes;
     }
-
+    public ArrayList<String> get_valid_item_barcodes() {
+        return this.valid_item_barcodes;
+    }
 }

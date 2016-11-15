@@ -20,7 +20,7 @@ import java.util.List;
 
 //this is set aside for questions to be displayed on the screen, answers will be recorded here
 public class QuestionActivity extends AppCompatActivity {
-
+    Item is_item = null;
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +58,9 @@ public class QuestionActivity extends AppCompatActivity {
         else {
             //Need to change this to a try/catch for null pointers
             Item item = user.get_location(user.location_barcode).get_item(user.current_barcode);
-
+            is_item = item;
             //example for below : "Fire Extinguisher Questions (Barcode #20)"
-            textView.setText(item.device_name + " Questions \n(Barcode #" + item.barcode_num + ")");
+            textView.setText(item.device_name + " Questions \n(Barcode #" + user.current_barcode + ")");
 
             ListView listview = (ListView)findViewById(R.id.questions_listview);
             QuestionAdapter adapter = new QuestionAdapter(getApplicationContext(), R.layout.question_layout);
@@ -91,8 +91,16 @@ public class QuestionActivity extends AppCompatActivity {
         //Otherwise we can send it forward to the item list
         else {
             //Sets all the answers that we just put in place
-            user.get_location(user.location_barcode).set_location_question_answer_map(answers);
-
+            //if item is still null, that means we had a location
+            Location location = user.get_location(user.location_barcode);
+            if (is_item == null){
+                System.out.println("Setting the location answer map!");
+                location.set_location_question_answer_map(answers);
+            }
+            else {
+                System.out.println("Setting the item answer map!");
+                is_item.set_item_question_answer_map(answers);
+            }
             Intent intent = new Intent(QuestionActivity.this, ItemListActivity.class);
             intent.putExtra("User", user);
 

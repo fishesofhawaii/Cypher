@@ -67,8 +67,16 @@ public class ItemListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //set the current barcode to the barcode of the item we clicked in the list
-                user.set_current_barcode(user.get_location(user.
-                        location_barcode).get_valid_items().get(position));
+
+                Location location = user.get_location(user.location_barcode);
+                user.set_valid_item_barcodes(location.get_valid_items());
+
+
+//                user.set_current_barcode(user.get_location(user.
+//                        location_barcode).get_valid_items().get(position));
+
+
+
                 Intent typeLocation_intent = new Intent(ItemListActivity.this, ScanOrTypeActivity.class);
                 startActivityForResult(typeLocation_intent, BARCODE_METHOD_REQUEST);
 
@@ -105,9 +113,20 @@ public class ItemListActivity extends AppCompatActivity {
         Location location = user.get_location(user.location_barcode);
         HashMap<String, String> location_answers = location.get_location_question_answer_map();
 
+        System.out.println("LOCATION QUESTIONS:");
         for (HashMap.Entry<String, String> entry : location_answers.entrySet()) {
             System.out.println("Q : " + entry.getKey() + "\tA : " + entry.getValue());
         }
+        System.out.println("ITEM QUESTIONS:");
+        for (HashMap.Entry<String, Item> entry : location.items.entrySet()){
+            Item i = entry.getValue();
+            HashMap<String, String> item_answers = i.get_item_question_answer_map();
+
+            for (HashMap.Entry<String, String> e : item_answers.entrySet()) {
+                System.out.println("q : " + e.getKey() + "\ta : " + e.getValue());
+            }
+        }
+
 
 
         Intent intent = new Intent(ItemListActivity.this, HomeActivity.class);
@@ -122,10 +141,11 @@ public class ItemListActivity extends AppCompatActivity {
             String barcode = data.getStringExtra("result");
 
             //SO... if the result from the popup is equal to the barcode ID in the database
-            if (user.current_barcode.equals(barcode)) {
 
+            if (user.get_valid_item_barcodes().contains(barcode)) {
                 //Need to populate item here
                 user.get_location(user.location_barcode).get_item(barcode).populate_item_questions();
+                user.set_current_barcode(barcode);
                 //Start activity that pulls up location questions
                 Intent intent = new Intent(ItemListActivity.this, QuestionActivity.class);
 

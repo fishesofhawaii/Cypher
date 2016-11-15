@@ -23,7 +23,7 @@ public class Item implements Serializable{
     String json_string;
 
     HashMap<String, String> item_question_answer_map = new HashMap<>();
-    ArrayList<String> possible_barcodes;
+    ArrayList<String> possible_barcodes = new ArrayList<>();
 
     Item(String barcode_num, String json_string) {
         this.barcode_num = barcode_num;
@@ -65,6 +65,21 @@ public class Item implements Serializable{
 
     public void set_possible_barcodes(ArrayList<String> _possible_barcodes) {
         this.possible_barcodes = _possible_barcodes;
+    }
+    public ArrayList<String> get_possible_barcodes() {
+        return possible_barcodes;
+    }
+
+    public void set_device_name(String _device_name) {
+        this.device_name = _device_name;
+    }
+
+    public void set_item_question_answer_map(HashMap<String, String> answers) {
+        this.item_question_answer_map = answers;
+    }
+
+    public HashMap<String, String> get_item_question_answer_map() {
+        return this.item_question_answer_map;
     }
 
 

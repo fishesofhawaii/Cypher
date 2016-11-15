@@ -21,6 +21,7 @@ public class Location implements Serializable {
     String barcode_num;
     int location_id;
     String user_assigned;
+    long timestamp;
 
     HashMap<String, String> location_question_answer_map = new HashMap<>();
     HashMap<String, Item> items = new HashMap<>();
@@ -74,6 +75,14 @@ public class Location implements Serializable {
 
             json_ary = json_obj.getJSONArray("devices");
 
+            ArrayList<String> possible_barcodes = new ArrayList<>();
+            possible_barcodes.add("1");
+            possible_barcodes.add("2");
+            possible_barcodes.add("3");
+
+            valid_items = possible_barcodes;
+
+
             for (int j = 0; j < json_ary.length(); j++) {
                 JSONObject item = new JSONObject(json_ary.get(j).toString());
 
@@ -88,14 +97,22 @@ public class Location implements Serializable {
 //                String barcode_num = String.valueOf(item.getString("barcode_num"));
 //                String user_assigned = String.valueOf(item.getString("user_assigned"));
 
-                valid_items.add(barcode_num);
                 device_names.add(device_name);
 
                 Item i = new Item(barcode_num, item.toString());
                 i.set_model_num(model_num);
                 i.set_manu(manu);
                 i.set_type_equip(type_equip);
-                i.set_possible_barcodes(null); //Change this. Needs to be Arraylist<string>
+                i.set_device_name(device_name);
+
+                //Remove below with real data once ally finishes
+                ArrayList<String> poss_barcodes = new ArrayList<>();
+                poss_barcodes.add("1");
+                poss_barcodes.add("2");
+                poss_barcodes.add("3");
+                // ABOVE
+
+                i.set_possible_barcodes(poss_barcodes);
 
                 this.items.put(barcode_num, i);
 
@@ -122,7 +139,17 @@ public class Location implements Serializable {
     }
 
     public Item get_item(String barcode) {
-        return items.get(barcode);
+        System.out.println("Looking for " + barcode);
+        for (Item i : items.values()) {
+            System.out.println("item possible barcodes: " + i.get_possible_barcodes().toString());
+            if (i.get_possible_barcodes().contains(barcode)) {
+                return i;
+            }
+        }
+        System.out.println("returning null");
+        return null;
+
+//        return items.get(barcode);
     }
 
     public void set_location_id(int _location_id) {
@@ -135,9 +162,9 @@ public class Location implements Serializable {
 
     public void set_location_question_answer_map(HashMap<String, String> qs_as) {
 
-//        for (HashMap.Entry<String, String> entry : qs_as.entrySet()) {
-//            System.out.println("Question: " + entry.getKey() + "\nAnswer: " + entry.getValue());
-//        }
+        for (HashMap.Entry<String, String> entry : qs_as.entrySet()) {
+            System.out.println("Question: " + entry.getKey() + "\nAnswer: " + entry.getValue() + "\n~~~~~~");
+        }
 
 
         this.location_question_answer_map = qs_as;
@@ -145,5 +172,10 @@ public class Location implements Serializable {
 
     public HashMap<String, String> get_location_question_answer_map() {
         return this.location_question_answer_map;
+    }
+
+    public void set_timestamp(long _timestamp) {
+        System.out.println("TIME : " + _timestamp);
+        this.timestamp = _timestamp;
     }
 }
