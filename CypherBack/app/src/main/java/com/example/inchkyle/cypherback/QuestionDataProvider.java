@@ -7,10 +7,12 @@ package com.example.inchkyle.cypherback;
 public class QuestionDataProvider {
     private int resource;
     private String question;
+    private String answer;
 
-    public QuestionDataProvider(int image, String q) {
+    public QuestionDataProvider(int image, String q, String answer) {
         this.resource = image;
         this.question = q;
+        this.answer = answer;
     }
 
 
@@ -20,6 +22,13 @@ public class QuestionDataProvider {
 
     public String getQuestion() {
         return question;
+    }
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String ans) {
+        this.answer = ans;
     }
 }
 

@@ -117,8 +117,12 @@ public class HomeActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK){
             String barcode = data.getStringExtra("result");
+            long timestamp = System.currentTimeMillis()/1000;
 
+            //Valid location, lets go to the location questions
             if (user.check_location(barcode)) {
+
+                user.get_location(barcode).set_timestamp(timestamp);
 
                 user.populate_location(barcode);
                 user.set_current_barcode(barcode);

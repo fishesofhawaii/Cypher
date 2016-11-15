@@ -22,6 +22,7 @@ public class User implements Serializable{
     String current_barcode;
     String location_barcode;
 
+    ArrayList<String> valid_item_barcodes = new ArrayList<>();
     ArrayList<String> valid_locations = new ArrayList<>();
     HashMap<String, Location> locations = new HashMap<>();
 
@@ -43,17 +44,21 @@ public class User implements Serializable{
             for (int i = 0; i < json_ary.length(); i++) {
                 JSONObject location = new JSONObject(json_ary.get(i).toString());
 
-                String barcode_num = String.valueOf(location.getInt("barcode_num"));
+                String loc_barcode_num = location.get("loc_barcode_num").toString();
                 String loc_barcode_name = location.get("loc_barcode_name").toString();
+                int location_id = location.getInt("location_id");
+//                String user_assigned = location.get("user_assigned").toString();
 
-                valid_locations.add(barcode_num);
+                valid_locations.add(loc_barcode_num);
 
                 //Create the location
-                Location l = new Location(barcode_num, location.toString());
+                Location l = new Location(loc_barcode_num, location.toString());
                 //And then set extras
                 l.set_loc_barcode_name(loc_barcode_name);
+                l.set_location_id(location_id);
+//                l.set_user_assigned(user_assigned);
 
-                this.locations.put(barcode_num, l);
+                this.locations.put(loc_barcode_num, l);
 
             }
         }
@@ -97,6 +102,13 @@ public class User implements Serializable{
     }
 
     public void set_BASE_URL(String url) {
+        BASE_URL = url;
+    }
 
+    public void set_valid_item_barcodes(ArrayList<String> barcodes) {
+        this.valid_item_barcodes = barcodes;
+    }
+    public ArrayList<String> get_valid_item_barcodes() {
+        return this.valid_item_barcodes;
     }
 }

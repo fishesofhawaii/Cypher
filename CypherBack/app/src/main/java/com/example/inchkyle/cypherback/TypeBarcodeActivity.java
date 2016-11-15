@@ -52,9 +52,9 @@ public class TypeBarcodeActivity extends Activity {
     public void confirm(View v) {
 
         Intent returnIntent = new Intent();
-        System.out.println("I got the barcode of: " + barcode_shown.getText().toString());
-        returnIntent.putExtra("result", barcode_shown.getText().toString());
 
+        returnIntent.putExtra("result", barcode_shown.getText().toString());
+        System.out.println("Giving : " + barcode_shown.getText().toString());
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
