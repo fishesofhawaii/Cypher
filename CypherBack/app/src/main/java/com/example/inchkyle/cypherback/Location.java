@@ -26,8 +26,10 @@ public class Location implements Serializable {
     HashMap<String, String> location_question_answer_map = new HashMap<>();
     HashMap<String, Item> items = new HashMap<>();
 
-    ArrayList<String> valid_items = new ArrayList<>();
+
     ArrayList<String> device_names = new ArrayList<>();
+    //type equip + model number will be the way to uniquely identify an item
+    ArrayList<String> valid_items = new ArrayList<>();
 
 
     Location(String barcode_num, String json_string) {
@@ -75,23 +77,27 @@ public class Location implements Serializable {
 
             json_ary = json_obj.getJSONArray("devices");
 
-            ArrayList<String> possible_barcodes = new ArrayList<>();
-            possible_barcodes.add("1");
-            possible_barcodes.add("2");
-            possible_barcodes.add("3");
 
-            valid_items = possible_barcodes;
 
 
             for (int j = 0; j < json_ary.length(); j++) {
                 JSONObject item = new JSONObject(json_ary.get(j).toString());
 
-                int model_num = item.getInt("model_num");
+                String model_num = item.get("model_num").toString();
                 String manu = item.get("manu").toString();
                 String type_equip = item.get("type_equip").toString();
                 String device_name = item.get("device_name").toString();
 
                 JSONArray barcode_array = item.getJSONArray("barcodes");
+
+                ArrayList<String> possible_barcodes = new ArrayList<>();
+
+                //populates the possible barcode array.
+                for (int i = 0; i < barcode_array.length(); i++){
+                    possible_barcodes.add(barcode_array.get(i).toString());
+                }
+
+
 
 //                String item_type = String.valueOf(item.getString("item_type"));
 //                String barcode_num = String.valueOf(item.getString("barcode_num"));
@@ -104,17 +110,11 @@ public class Location implements Serializable {
                 i.set_manu(manu);
                 i.set_type_equip(type_equip);
                 i.set_device_name(device_name);
+                i.set_possible_barcodes(possible_barcodes);
 
-                //Remove below with real data once ally finishes
-                ArrayList<String> poss_barcodes = new ArrayList<>();
-                poss_barcodes.add("1");
-                poss_barcodes.add("2");
-                poss_barcodes.add("3");
-                // ABOVE
+                valid_items.add(type_equip + model_num);
 
-                i.set_possible_barcodes(poss_barcodes);
-
-                this.items.put(barcode_num, i);
+                this.items.put(type_equip + model_num, i);
 
             }
 
@@ -134,10 +134,6 @@ public class Location implements Serializable {
         return device_names;
     }
 
-    public ArrayList<String> get_valid_items() {
-        return valid_items;
-    }
-
     public Item get_item(String barcode) {
         System.out.println("Looking for " + barcode);
         for (Item i : items.values()) {
@@ -150,6 +146,10 @@ public class Location implements Serializable {
         return null;
 
 //        return items.get(barcode);
+    }
+
+    public ArrayList<String> get_valid_items() {
+        return this.valid_items;
     }
 
     public void set_location_id(int _location_id) {
@@ -179,6 +179,10 @@ public class Location implements Serializable {
         this.timestamp = _timestamp;
     }
 
+    //Get the item by the unique identifier type_equip + model_number
+    public Item get_item_by_unique(String s) {
+        return items.get(s);
+    }
 
 
     public static class Object {

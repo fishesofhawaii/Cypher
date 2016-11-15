@@ -13,13 +13,12 @@ import java.util.HashMap;
  */
 
 public class Item implements Serializable{
-    int model_num;
+    String model_num;
     String manu;
     String type_equip;
     String device_name;
 
     String barcode_num;
-
     String json_string;
 
     HashMap<String, String> item_question_answer_map = new HashMap<>();
@@ -59,7 +58,7 @@ public class Item implements Serializable{
         this.manu = _manu;
     }
 
-    public void set_model_num(int _model_num) {
+    public void set_model_num(String _model_num) {
         this.model_num = _model_num;
     }
 
@@ -81,6 +80,8 @@ public class Item implements Serializable{
     public HashMap<String, String> get_item_question_answer_map() {
         return this.item_question_answer_map;
     }
+
+
 
 
     public static class Object{

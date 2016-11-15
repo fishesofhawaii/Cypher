@@ -56,8 +56,8 @@ public class ItemListActivity extends AppCompatActivity {
 
 //        Replace with cardview
         ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                        new ArrayList<String>(user.get_location(
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                        new ArrayList<>(user.get_location(
                                 user.location_barcode).get_device_names()));
 
         ListView listview = (ListView)findViewById(R.id.item_listview);
@@ -69,7 +69,10 @@ public class ItemListActivity extends AppCompatActivity {
                 //set the current barcode to the barcode of the item we clicked in the list
 
                 Location location = user.get_location(user.location_barcode);
-                user.set_valid_item_barcodes(location.get_valid_items());
+                Item this_item = location.get_item_by_unique(location.get_valid_items().get(position));
+
+                //This sets the valid barcodes for the current item
+                user.set_valid_item_barcodes(this_item.get_possible_barcodes());
 
 
 //                user.set_current_barcode(user.get_location(user.
@@ -121,7 +124,7 @@ public class ItemListActivity extends AppCompatActivity {
         for (HashMap.Entry<String, Item> entry : location.items.entrySet()){
             Item i = entry.getValue();
             HashMap<String, String> item_answers = i.get_item_question_answer_map();
-
+            System.out.println("********");
             for (HashMap.Entry<String, String> e : item_answers.entrySet()) {
                 System.out.println("q : " + e.getKey() + "\ta : " + e.getValue());
             }
