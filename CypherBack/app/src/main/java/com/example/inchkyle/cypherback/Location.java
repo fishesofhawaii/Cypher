@@ -25,7 +25,7 @@ public class Location implements Serializable {
 
     HashMap<String, String> location_question_answer_map = new HashMap<>();
     HashMap<String, Item> items = new HashMap<>();
-
+    HashMap<String, String> location_question_id_map = new HashMap<>();
 
     ArrayList<String> device_names = new ArrayList<>();
     //type equip + model number will be the way to uniquely identify an item
@@ -58,10 +58,15 @@ public class Location implements Serializable {
             //Iterates through questions, places empty string as answer for now
             for (int i = 0; i < question_ary.length(); i++) {
                 JSONObject question_JSON = new JSONObject(question_ary.get(i).toString());
-                location_question_answer_map.put(question_JSON.get("question_text").toString(), "NA");
 
+                String question_text = question_JSON.get("question_text").toString();
+                int question_id = question_JSON.getInt("question_id");
+
+                location_question_id_map.put(question_text, Integer.toString(question_id));
+                location_question_answer_map.put(question_text, "NA");
             }
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -156,8 +161,8 @@ public class Location implements Serializable {
         this.location_id = _location_id;
     }
 
-    public void set_user_assigned(String _user_assigned) {
-        this.user_assigned = _user_assigned;
+    public String get_location_id() {
+        return Integer.toString(location_id);
     }
 
     public void set_location_question_answer_map(HashMap<String, String> qs_as) {
@@ -197,6 +202,12 @@ public class Location implements Serializable {
         }
     }
 
+    public HashMap<String, String> get_location_question_id_map() {
+        return location_question_id_map;
+    }
 
+    public String get_timestamp() {
+        return Long.toString(this.timestamp);
+    }
 
 }

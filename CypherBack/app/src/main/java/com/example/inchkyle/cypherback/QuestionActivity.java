@@ -47,7 +47,7 @@ public class QuestionActivity extends AppCompatActivity {
             QuestionAdapter adapter = new QuestionAdapter(getApplicationContext(), R.layout.question_layout);
 
             //This goes through all the questions and adds them to the adapter
-            for (String question : location.location_question_answer_map.keySet()) {
+            for (String question : location.get_location_question_answer_map().keySet()) {
                 QuestionDataProvider provider = new QuestionDataProvider(0, question, "NA");
                 adapter.add(provider);
             }
@@ -96,6 +96,7 @@ public class QuestionActivity extends AppCompatActivity {
             if (is_item == null){
                 System.out.println("Setting the location answer map!");
                 location.set_location_question_answer_map(answers);
+//                location.set_location_question_list(answers);
             }
             else {
                 System.out.println("Setting the item answer map!");

@@ -132,5 +132,4 @@ public class QuestionAdapter extends ArrayAdapter {
     public HashMap<String, String> get_question_answer_map() {
         return question_answer_map;
     }
-
 }

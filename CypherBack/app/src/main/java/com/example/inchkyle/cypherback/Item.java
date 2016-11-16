@@ -22,6 +22,9 @@ public class Item implements Serializable{
     String json_string;
 
     HashMap<String, String> item_question_answer_map = new HashMap<>();
+    HashMap<String, String> item_question_id_map = new HashMap<>();
+
+
     ArrayList<String> possible_barcodes = new ArrayList<>();
 
     Item(String barcode_num, String json_string) {
@@ -38,7 +41,12 @@ public class Item implements Serializable{
             //Iterates through questions, places empty string as answer for now
             for (int i = 0; i < question_ary.length(); i++) {
                 JSONObject question_JSON = new JSONObject(question_ary.get(i).toString());
-                item_question_answer_map.put(question_JSON.get("question_text").toString(), "NA");
+
+                String question_text = question_JSON.get("question_text").toString();
+                int question_id = question_JSON.getInt("question_id");
+
+                item_question_answer_map.put(question_text, "NA");
+                item_question_id_map.put(question_text, Integer.toString(question_id));
 
             }
 
@@ -81,7 +89,9 @@ public class Item implements Serializable{
         return this.item_question_answer_map;
     }
 
-
+    public HashMap<String, String> get_item_question_id_map() {
+        return this.item_question_id_map;
+    }
 
 
     public static class Object{

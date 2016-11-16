@@ -114,19 +114,44 @@ public class ItemListActivity extends AppCompatActivity {
 
     public void submit_answers(View v) {
         Location location = user.get_location(user.location_barcode);
+        String location_id = location.get_location_id();
+        String time_answered = location.get_timestamp();
+
         HashMap<String, String> location_answers = location.get_location_question_answer_map();
+        HashMap<String, String> question_id_map = location.get_location_question_id_map();
 
         System.out.println("LOCATION QUESTIONS:");
+//        for (HashMap.Entry<String, String> entry : location_answers.entrySet()) {
+//            System.out.println("Q : " + entry.getKey() + "\tA : " + entry.getValue());
+//        }
+
         for (HashMap.Entry<String, String> entry : location_answers.entrySet()) {
-            System.out.println("Q : " + entry.getKey() + "\tA : " + entry.getValue());
+            String question = entry.getKey();
+            String answer = entry.getValue();
+            String question_id = question_id_map.get(question);
+
+            //String q_id, String a, String location_id, String time_a, String user_name
+
+            //Question id and answer text
+            Answer ans = new Answer(question_id, answer, location_id, time_answered, user.payroll_id);
+            ans.print();
         }
         System.out.println("ITEM QUESTIONS:");
         for (HashMap.Entry<String, Item> entry : location.items.entrySet()){
             Item i = entry.getValue();
             HashMap<String, String> item_answers = i.get_item_question_answer_map();
+            HashMap<String, String> item_question_id_map = i.get_item_question_id_map();
+
+
             System.out.println("********");
             for (HashMap.Entry<String, String> e : item_answers.entrySet()) {
-                System.out.println("q : " + e.getKey() + "\ta : " + e.getValue());
+//                System.out.println("q : " + e.getKey() + "\ta : " + e.getValue());
+                String question = e.getKey();
+                String answer = e.getValue();
+                String question_id = item_question_id_map.get(question);
+
+                Answer ans = new Answer(question_id, answer, location_id, time_answered, user.payroll_id);
+                ans.print();
             }
         }
 
