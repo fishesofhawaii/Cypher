@@ -30,14 +30,13 @@ public class Answer implements Serializable {
     }
 
     public void print() {
-        System.out.println("~~~~");
-        System.out.println("User - " + user +
-                            "\nloc_id - " + loc_id +
-                            "\ntime_answered - " + time_answered +
-                            "\nquestion_id - " + question_id +
-                            "\nanswer_text - " + answer_text);
-        System.out.println("~~~~");
-
+        System.out.println("User (" + user +
+                            ")\tloc_id (" + loc_id +
+                            ")\ttime_answered (" + time_answered +
+                            ")\tquestion_id (" + question_id +
+                            ")\tanswer_text (" + answer_text + ")");
     }
+
+
 
 }

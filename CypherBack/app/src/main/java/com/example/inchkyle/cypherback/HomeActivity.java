@@ -19,6 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.os.Vibrator;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import static android.R.id.list;
@@ -89,16 +94,49 @@ public class HomeActivity extends AppCompatActivity {
         if (home_intent != null) {
             user = (User) home_intent.getSerializableExtra("User");
             user.set_locations();
+
+            //If there are no answers, we are going to try to load some
+            if (user.no_answers()){
+                try {
+
+                    //LOADING the previous data
+                    File dir = getFilesDir();
+                    File file = new File(dir, "t.tmp");
+
+                    FileInputStream fis = new FileInputStream(file);
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+                    ArrayList<Answer> ans = (ArrayList<Answer>) ois.readObject();
+                    int item_count = ois.readInt();
+
+                    System.out.println("Item count is : " + item_count);
+                    for (Answer a : ans) {
+                        a.print();
+                    }
+
+                    user.set_local_items_to_push_count(item_count);
+                    user.set_answer_list(ans);
+
+                    ois.close();
+                }
+                catch (IOException | ClassNotFoundException e) {
+                    System.out.println("Couldnt load for some reason");
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     //Clicking the update update button should retrieve database values for the employee again
     public void update_click(View v) {
-        Toast.makeText(this, "Another post to get user spec data", Toast.LENGTH_SHORT).show();
+
     }
 
     //Go to the history page Eventually
     public void history_click(View v) {
+        user.clear_answers();
+
+        Toast.makeText(this, "deleted file", Toast.LENGTH_SHORT).show();
+
         Toast.makeText(this, "HistoryClick", Toast.LENGTH_SHORT).show();
     }
 
