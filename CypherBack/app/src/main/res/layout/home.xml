@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -12,34 +13,31 @@
     <RelativeLayout
         android:id="@+id/navigation_layout"
         android:layout_width="fill_parent"
-        android:layout_height="375dp"
-        android:background="#CF1703"
-        android:gravity="center">
+        android:layout_height="330dp"
+        android:gravity="top">
 
-        <Button
-            android:text="Scan Barcode Location"
+        <ImageButton
             android:id="@+id/scan_barcode_btn"
             android:onClick="scan_barcode_click"
-            android:layout_width="280dp"
-            android:layout_height="300dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/zxing_transparent"
             android:textSize="24dp"
-            android:drawableBottom="@drawable/barcode"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:padding="16dp"/>
-
-        <Button
-            android:text="History"
+            android:padding="16dp"
+            app:srcCompat="@drawable/barcode_circle"
+            android:elevation="2dp"/>
+        <ImageButton
             android:id="@+id/history_btn"
             android:onClick="history_click"
-            android:layout_width="280dp"
-            android:layout_height="300dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="24dp"
-            android:drawableBottom="@drawable/history"
+            android:background="@color/zxing_transparent"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:drawablePadding="16dp"
-            android:padding="16dp"/>
+            android:padding="16dp"
+            app:srcCompat="@drawable/history_circle" />
 
     </RelativeLayout>
 
@@ -57,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="Upcoming Deadlines"
             android:textColor="@color/white"
-            android:background="#222222"
+            android:background="#444547"
             android:textSize="24sp"
             android:layout_alignParentStart="true"
             android:padding="16dp"/>
@@ -65,7 +63,7 @@
         <ListView
             android:id="@+id/mobile_list"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
             android:scrollbars="vertical"
             android:orientation="vertical"
             android:foregroundGravity="bottom"
@@ -79,16 +77,31 @@
 
 
 
-    <Button
-        android:text="Update"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/sync_btn"
-        android:onClick="update_click"
-        android:gravity="bottom|center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+    <!--<Button-->
+        <!--android:text="Update"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:id="@+id/sync_btn"-->
+        <!--android:onClick="update_click"-->
+        <!--android:gravity="bottom|center_horizontal"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentStart="true" />-->
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="update_click"
+        android:src="@drawable/refresh"
+        android:layout_marginTop="20dp"
+        android:id="@+id/sync_btn"
+        app:backgroundTint="@color/AMRedDark"
+        app:rippleColor="@android:color/transparent"
+        android:layout_below="@+id/navigation_layout"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="16dp"
+        android:layout_marginRight="16dp"
+        android:tint="@color/white" />
 
 
 </RelativeLayout>

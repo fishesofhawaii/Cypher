@@ -32,9 +32,10 @@ public class LoginActivity extends AppCompatActivity {
 
 //    String BASE_URL = "http://35.12.211.195:8000";
 //    String BASE_URL = "http://35.11.17.117:8000";
-    String BASE_URL = "http://35.12.211.199:8000/";
-
+//    String BASE_URL = "http://35.12.211.199:8000/";
 //    String BASE_URL = "http://10.0.0.117:8000";
+
+    String BASE_URL = "http://172.16.0.5:8000";
 
     User user;
     @Override
