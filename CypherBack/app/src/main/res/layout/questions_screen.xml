@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:theme="@style/MyCustomTheme"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#F5F5F5">
 
     <!--TODO: Change Action Bar color and text-->
 
@@ -34,12 +35,15 @@
 
         <Button
             android:id="@+id/confirm_btn"
-            android:text="Simulate Yes to All"
+            android:text="Continue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="confirm_answers"
             android:layout_below="@+id/questions_listview"
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/AMRedDark" />
     </LinearLayout>
 
 
