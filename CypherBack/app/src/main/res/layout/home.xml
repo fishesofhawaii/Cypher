@@ -14,7 +14,8 @@
         android:id="@+id/navigation_layout"
         android:layout_width="fill_parent"
         android:layout_height="330dp"
-        android:gravity="top">
+        android:gravity="top"
+        android:background="#ecf0f1">
 
         <ImageButton
             android:id="@+id/scan_barcode_btn"
@@ -22,10 +23,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/zxing_transparent"
-            android:textSize="24dp"
-            android:padding="16dp"
             app:srcCompat="@drawable/barcode_circle"
-            android:elevation="2dp"/>
+            android:elevation="2dp"
+            android:paddingTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingBottom="8dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Scan Barcode Location"
+            android:layout_below="@+id/scan_barcode_btn"
+            android:textSize="22dp"
+            android:paddingLeft="36dp"/>
+
         <ImageButton
             android:id="@+id/history_btn"
             android:onClick="history_click"
@@ -36,8 +46,18 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:drawablePadding="16dp"
-            android:padding="16dp"
-            app:srcCompat="@drawable/history_circle" />
+            app:srcCompat="@drawable/history_circle"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="History"
+            android:layout_below="@+id/history_btn"
+            android:paddingLeft="418dp"
+            android:textSize="22dp"/>
 
     </RelativeLayout>
 
@@ -68,7 +88,8 @@
             android:orientation="vertical"
             android:foregroundGravity="bottom"
             android:layout_below="@id/upcoming"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:background="#bdc3c7">
         </ListView>
 
 
@@ -93,7 +114,7 @@
         android:clickable="true"
         android:onClick="update_click"
         android:src="@drawable/refresh"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:id="@+id/sync_btn"
         app:backgroundTint="@color/AMRedDark"
         app:rippleColor="@android:color/transparent"

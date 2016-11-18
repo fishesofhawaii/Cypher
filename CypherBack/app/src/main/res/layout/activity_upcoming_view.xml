@@ -5,7 +5,7 @@
     android:paddingRight="16dp">
     <TextView
         android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="left|center_vertical"
         android:paddingRight="16dp"
@@ -21,12 +21,14 @@
         <TextView
             android:id="@+id/tvCity"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
         <TextView
             android:id="@+id/tvPlant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/tvCity" />
+            android:layout_below="@+id/tvCity"
+            android:textSize="14dp"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ArcelorMittalLightGreen">
+    app:theme="@style/MyCustomTheme"
+    android:padding="16dp">
+
+    <!--TODO: Change Action Bar color and text-->
 
     <TextView
         android:text="Questions Screen"
@@ -10,24 +15,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
         android:textSize="30sp"
         android:id="@+id/textView" />
 
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/questions_listview"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_height="600dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|center_vertical">
+        <ListView
+            android:id="@+id/questions_listview"
+            android:layout_width="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="false"
+            android:layout_weight="1"
+            android:layout_below="@+id/textView" />
 
-    <Button
-        android:text="Simulate Yes to All"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/questions_listview"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:id="@+id/confirm_btn"
-        android:onClick="confirm_answers" />
+        <Button
+            android:id="@+id/confirm_btn"
+            android:text="Simulate Yes to All"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="confirm_answers"
+            android:layout_below="@+id/questions_listview"
+            android:layout_weight="0"/>
+    </LinearLayout>
+
+
 </RelativeLayout>

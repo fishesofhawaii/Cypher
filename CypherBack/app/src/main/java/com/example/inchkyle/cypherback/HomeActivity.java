@@ -49,31 +49,31 @@ public class HomeActivity extends AppCompatActivity {
 
 
         // Add item to adapter
-        Location.Object newLocation0 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation0 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation0);
-        Location.Object newLocation1 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation1 = new Location.Object("1 year", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation1);
-        Location.Object newLocation2 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation2 = new Location.Object("3 months", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation2);
-        Location.Object newLocation3 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation3 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation3);
-        Location.Object newLocation4 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation4 = new Location.Object("1 year", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation4);
-        Location.Object newLocation5 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation5 = new Location.Object("3 months", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation5);
-        Location.Object newLocation6 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation6 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation6);
-        Location.Object newLocation7 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation7 = new Location.Object("1 year", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation7);
-        Location.Object newLocation8 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation8 = new Location.Object("3 months", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation8);
-        Location.Object newLocation9 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation9 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation9);
-        Location.Object newLocation10 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation10 = new Location.Object("1 year", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation10);
-        Location.Object newLocation11 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation11 = new Location.Object("3 months", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation11);
-        Location.Object newLocation12 = new Location.Object("15 days", "Illinois", "Plant A");
+        Location.Object newLocation12 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
         adapter.add(newLocation12);
 
 
