@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -11,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,14 +35,22 @@ public class ScanOrTypeActivity extends Activity{
         setContentView(R.layout.scan_or_type_popup);
 
 
-
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int height = dm.heightPixels;
-        int width = dm.widthPixels;
+//        int height = dm.heightPixels;
+//        int width = dm.widthPixels;
+
+        int height = 550;
+        int width = 300;
+
+        ColorDrawable dw = new ColorDrawable(0xb0000000);
+
+
 
         getWindow().setLayout((int) (width*.8), (int) (height*.8));
+//        getWindow().setBackgroundDrawable(dw);
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

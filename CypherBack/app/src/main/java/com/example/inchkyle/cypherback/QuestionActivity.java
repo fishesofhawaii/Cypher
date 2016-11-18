@@ -30,6 +30,7 @@ public class QuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.questions_screen);
 
+
         Intent home_intent = getIntent();
 
         if (home_intent != null) {

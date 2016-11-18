@@ -4,7 +4,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ArcelorMittalLightTan"
-    android:layout_gravity="center_vertical|center_horizontal">
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:padding="16dp">
 
     <Button
         android:text="Scan Barcode"
@@ -14,7 +15,6 @@
         android:id="@+id/scan_btn"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="105dp"
         android:onClick="camera_scan" />
 
     <Button
@@ -23,7 +23,6 @@
         android:layout_height="200dp"
         android:drawableBottom="@drawable/barcode_text"
         android:id="@+id/type_btn"
-        android:layout_marginTop="51dp"
         android:layout_below="@+id/scan_btn"
         android:layout_alignStart="@+id/scan_btn"
         android:onClick="type_barcode" />
