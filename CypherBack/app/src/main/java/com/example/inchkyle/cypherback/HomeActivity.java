@@ -171,6 +171,12 @@ public class HomeActivity extends AppCompatActivity {
                         //Last called in a success AND failure
                         if (POST_SUCCESS){
                             user.clear_answers();
+
+                            //Delete the file
+                            File dir = getFilesDir();
+                            File file = new File(dir, "t.tmp");
+                            file.delete();
+
                         }
 
                     }

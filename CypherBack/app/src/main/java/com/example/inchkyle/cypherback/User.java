@@ -177,11 +177,18 @@ public class User implements Serializable{
         JSONObject data = new JSONObject();
         JSONObject answer_json = new JSONObject();
         JSONArray answer_ary = new JSONArray();
-        JSONObject json_answer = new JSONObject();
 
         for (Answer a : this.answer_list) {
+            JSONObject json_answer = new JSONObject();
+
             String answer_text = a.getAnswer_text();
             System.out.println("~~~~ " + answer_text);
+
+            String loc_id = a.getLoc_id();
+            String question_id = a.getQuestion_id();
+            String time_answered = a.getTime_answered();
+            String usr = a.getUser();
+
             if (answer_text.equals("1")){
                 answer_text = "yes";
             }
@@ -190,10 +197,10 @@ public class User implements Serializable{
             }
 
             json_answer.put("answer_text", answer_text);
-            json_answer.put("loc_id", a.getLoc_id());
-            json_answer.put("question_id", a.getQuestion_id());
-            json_answer.put("time_answered", a.getTime_answered());
-            json_answer.put("user", a.getUser());
+            json_answer.put("loc_id", loc_id);
+            json_answer.put("question_id", question_id);
+            json_answer.put("time_answered", time_answered);
+            json_answer.put("user", usr);
 
             answer_ary.put(json_answer);
 
