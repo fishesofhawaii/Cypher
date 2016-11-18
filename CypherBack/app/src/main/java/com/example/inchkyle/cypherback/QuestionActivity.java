@@ -66,6 +66,10 @@ public class QuestionActivity extends AppCompatActivity {
             Item item = user.get_location(user.location_barcode).get_item(user.current_barcode);
             is_item = item;
             //example for below : "Fire Extinguisher Questions (Barcode #20)"
+
+            String title = item.device_name +  " Item Questions";
+            setTitle(title);
+
             textView.setText(item.device_name + " Questions \n(Barcode #" + user.current_barcode + ")");
 
             ListView listview = (ListView)findViewById(R.id.questions_listview);
