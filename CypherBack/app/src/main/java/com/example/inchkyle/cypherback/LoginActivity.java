@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // TODO: Error handling on login without internet connection
 
+
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,9 +4,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Created by inchkyle on 11/1/16.
@@ -25,6 +35,10 @@ public class User implements Serializable{
     ArrayList<String> valid_item_barcodes = new ArrayList<>();
     ArrayList<String> valid_locations = new ArrayList<>();
     HashMap<String, Location> locations = new HashMap<>();
+
+    int local_items_to_push_count = 0;
+    ArrayList<Answer> answer_list = new ArrayList<>();
+
 
     User(String id, String json_str) {
         this.payroll_id = id;
@@ -110,5 +124,87 @@ public class User implements Serializable{
     }
     public ArrayList<String> get_valid_item_barcodes() {
         return this.valid_item_barcodes;
+    }
+
+    public int get_local_items_to_push_count() {
+        return this.local_items_to_push_count;
+    }
+
+    public void add_local_items_to_push (int count) {
+        this.local_items_to_push_count += count;
+    }
+
+    public void add_answers(ArrayList<Answer> _answer_list) {
+
+        for (Answer a : _answer_list) {
+            this.answer_list.add(a);
+        }
+    }
+
+    //This will be called after all the answers are pushed up
+    public void clear_answers() {
+        this.answer_list.clear();
+        this.local_items_to_push_count = 0;
+    }
+
+    public void load_answers() throws IOException, ClassNotFoundException {
+
+    }
+
+    //If there are no answers, return true
+    public boolean no_answers() {
+        return this.answer_list.size() == 0;
+    }
+
+    public ArrayList<Answer> get_answer_list() {
+        return this.answer_list;
+    }
+
+    public void set_local_items_to_push_count(int i) {
+        this.local_items_to_push_count = i;
+    }
+
+    public void set_answer_list(ArrayList<Answer> a) {
+        this.answer_list = a;
+    }
+
+    public String get_BASE_URL() {
+        return this.BASE_URL;
+    }
+
+    public StringEntity get_JSON_entity() throws JSONException, UnsupportedEncodingException {
+
+        JSONObject data = new JSONObject();
+        JSONObject answer_json = new JSONObject();
+        JSONArray answer_ary = new JSONArray();
+        JSONObject json_answer = new JSONObject();
+
+        for (Answer a : this.answer_list) {
+            String answer_text = a.getAnswer_text();
+            System.out.println("~~~~ " + answer_text);
+            if (answer_text.equals("1")){
+                answer_text = "yes";
+            }
+            else if (answer_text.equals("0")) {
+                answer_text = "no";
+            }
+
+            json_answer.put("answer_text", answer_text);
+            json_answer.put("loc_id", a.getLoc_id());
+            json_answer.put("question_id", a.getQuestion_id());
+            json_answer.put("time_answered", a.getTime_answered());
+            json_answer.put("user", a.getUser());
+
+            answer_ary.put(json_answer);
+
+        }
+
+        answer_json.put("answers", answer_ary);
+        data.put("data", answer_json);
+
+        StringEntity _JSON_entity = new StringEntity(data.toString());
+        System.out.println(data.toString(1));
+
+        return _JSON_entity;
     }
 }

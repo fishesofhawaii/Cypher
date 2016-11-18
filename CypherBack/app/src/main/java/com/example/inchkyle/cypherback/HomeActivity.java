@@ -14,12 +14,27 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.ResponseHandlerInterface;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.os.Vibrator;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.util.EntityUtils;
 
 import static android.R.id.list;
 
@@ -30,6 +45,8 @@ import static android.R.id.list;
 public class HomeActivity extends AppCompatActivity {
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
     User user;
+    Boolean POST_SUCCESS = false;
+
 
     Vibrator v;
 
@@ -89,16 +106,182 @@ public class HomeActivity extends AppCompatActivity {
         if (home_intent != null) {
             user = (User) home_intent.getSerializableExtra("User");
             user.set_locations();
+
+            //If there are no answers, we are going to try to load some
+            if (user.no_answers()){
+                try {
+
+                    //LOADING the previous data
+                    File dir = getFilesDir();
+                    File file = new File(dir, "t.tmp");
+
+                    FileInputStream fis = new FileInputStream(file);
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+                    ArrayList<Answer> ans = (ArrayList<Answer>) ois.readObject();
+                    int item_count = ois.readInt();
+
+                    System.out.println("Item count is : " + item_count);
+                    for (Answer a : ans) {
+                        a.print();
+                    }
+
+                    user.set_local_items_to_push_count(item_count);
+                    user.set_answer_list(ans);
+
+                    ois.close();
+                }
+                catch (IOException | ClassNotFoundException e) {
+                    System.out.println("Couldnt load for some reason");
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     //Clicking the update update button should retrieve database values for the employee again
-    public void update_click(View v) {
-        Toast.makeText(this, "Another post to get user spec data", Toast.LENGTH_SHORT).show();
+    public void update_click(View v) throws JSONException, UnsupportedEncodingException {
+        System.out.println("GOING TO UPDATE THE DATABASE\n");
+
+        String BASE_URL = user.get_BASE_URL();
+        StringEntity entity = user.get_JSON_entity();
+
+        final AsyncHttpClient client = new AsyncHttpClient();
+        final RequestParams params = new RequestParams();
+
+        final String POST_address = BASE_URL + "/questions/addanswers/";
+        //This is the post with the employee id (the payroll_id)
+
+        client.post(getBaseContext(), POST_address,
+                entity, "application/json", new ResponseHandlerInterface() {
+
+                    @Override
+                    public void sendResponseMessage(HttpResponse response) throws IOException {
+                        System.out.println("1");
+                        POST_SUCCESS = true;
+
+                    }
+
+                    @Override
+                    public void sendStartMessage() {
+
+                    }
+
+                    @Override
+                    public void sendFinishMessage() {
+                        //Last called in a success AND failure
+                        if (POST_SUCCESS){
+                            user.clear_answers();
+                        }
+
+                    }
+
+                    @Override
+                    public void sendProgressMessage(long bytesWritten, long bytesTotal) {
+
+                    }
+
+                    @Override
+                    public void sendCancelMessage() {
+
+                    }
+
+                    @Override
+                    public void sendSuccessMessage(int statusCode, Header[] headers, byte[] responseBody) {
+
+                    }
+
+                    @Override
+                    public void sendFailureMessage(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        //Second to last called in a failure
+                        System.out.println("Send fail");
+                    }
+
+    //           TODO: Display message if user is unable to log in
+
+                    @Override
+                    public void sendRetryMessage(int retryNo) {
+                        //Gets called every attempt to send POST
+                        System.out.println("Send Retry");
+
+                    }
+
+                    @Override
+                    public URI getRequestURI() {
+                        return null;
+                    }
+
+                    @Override
+                    public void setRequestURI(URI requestURI) {
+
+                    }
+
+                    @Override
+                    public Header[] getRequestHeaders() {
+                        return new Header[0];
+                    }
+
+                    @Override
+                    public void setRequestHeaders(Header[] requestHeaders) {
+
+                    }
+
+                    @Override
+                    public boolean getUseSynchronousMode() {
+                        return false;
+                    }
+
+                    @Override
+                    public void setUseSynchronousMode(boolean useSynchronousMode) {
+
+                    }
+
+                    @Override
+                    public boolean getUsePoolThread() {
+                        return false;
+                    }
+
+                    @Override
+                    public void setUsePoolThread(boolean usePoolThread) {
+
+                    }
+
+                    @Override
+                    public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+
+                    }
+
+                    @Override
+                    public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+
+                    }
+
+                    @Override
+                    public Object getTag() {
+                        return null;
+                    }
+
+                    @Override
+                    public void setTag(Object TAG) {
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
     }
 
     //Go to the history page Eventually
     public void history_click(View v) {
+        user.clear_answers();
+
+        Toast.makeText(this, "deleted file", Toast.LENGTH_SHORT).show();
+
         Toast.makeText(this, "HistoryClick", Toast.LENGTH_SHORT).show();
     }
 

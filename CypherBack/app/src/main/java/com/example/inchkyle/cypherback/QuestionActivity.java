@@ -44,8 +44,10 @@ public class QuestionActivity extends AppCompatActivity {
             //Need to change this to try/catch for null pointers
             Location location = user.get_location(user.current_barcode);
 
-            textView.setText(location.loc_barcode_name + " Location Questions " +
-                    "\n(Barcode #" + user.current_barcode + ")");
+            //Change the title here
+            String title = location.loc_barcode_name + " Location Questions";
+            setTitle(title);
+
 
             ListView listview = (ListView) findViewById(R.id.questions_listview);
             QuestionAdapter adapter = new QuestionAdapter(getApplicationContext(), R.layout.question_layout);

@@ -13,6 +13,32 @@ public class Answer implements Serializable {
     String time_answered;
     String user;
 
+
+    public String getAnswer_text() {
+        return answer_text;
+    }
+
+
+    public String getLoc_id() {
+        return loc_id;
+    }
+
+
+    public String getQuestion_id() {
+        return question_id;
+    }
+
+
+    public String getTime_answered() {
+        return time_answered;
+    }
+
+
+    public String getUser() {
+        return user;
+    }
+
+
     Answer(String q_id, String a, String location_id, String time_a, String user_name) {
         this.answer_text = a;
         this.loc_id = location_id;
@@ -30,14 +56,13 @@ public class Answer implements Serializable {
     }
 
     public void print() {
-        System.out.println("~~~~");
-        System.out.println("User - " + user +
-                            "\nloc_id - " + loc_id +
-                            "\ntime_answered - " + time_answered +
-                            "\nquestion_id - " + question_id +
-                            "\nanswer_text - " + answer_text);
-        System.out.println("~~~~");
-
+        System.out.println("User (" + user +
+                            ")\tloc_id (" + loc_id +
+                            ")\ttime_answered (" + time_answered +
+                            ")\tquestion_id (" + question_id +
+                            ")\tanswer_text (" + answer_text + ")");
     }
+
+
 
 }

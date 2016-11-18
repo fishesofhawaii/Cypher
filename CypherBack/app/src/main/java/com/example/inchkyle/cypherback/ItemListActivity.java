@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -120,6 +124,10 @@ public class ItemListActivity extends AppCompatActivity {
         HashMap<String, String> location_answers = location.get_location_question_answer_map();
         HashMap<String, String> question_id_map = location.get_location_question_id_map();
 
+        ArrayList<Answer> answers = new ArrayList<>();
+
+        int item_count = 0;
+
         System.out.println("LOCATION QUESTIONS:");
 //        for (HashMap.Entry<String, String> entry : location_answers.entrySet()) {
 //            System.out.println("Q : " + entry.getKey() + "\tA : " + entry.getValue());
@@ -133,8 +141,9 @@ public class ItemListActivity extends AppCompatActivity {
             //String q_id, String a, String location_id, String time_a, String user_name
 
             //Question id and answer text
+            System.out.println("!!!!!!!" + location_id);
             Answer ans = new Answer(question_id, answer, location_id, time_answered, user.payroll_id);
-            ans.print();
+            answers.add(ans);
         }
         System.out.println("ITEM QUESTIONS:");
         for (HashMap.Entry<String, Item> entry : location.items.entrySet()){
@@ -142,6 +151,9 @@ public class ItemListActivity extends AppCompatActivity {
             HashMap<String, String> item_answers = i.get_item_question_answer_map();
             HashMap<String, String> item_question_id_map = i.get_item_question_id_map();
 
+            if (!(item_answers.size() == 0)) {
+                item_count += 1;
+            }
 
             System.out.println("********");
             for (HashMap.Entry<String, String> e : item_answers.entrySet()) {
@@ -150,12 +162,44 @@ public class ItemListActivity extends AppCompatActivity {
                 String answer = e.getValue();
                 String question_id = item_question_id_map.get(question);
 
+
                 Answer ans = new Answer(question_id, answer, location_id, time_answered, user.payroll_id);
-                ans.print();
+                answers.add(ans);
             }
         }
 
+        user.add_local_items_to_push(item_count);
+        user.add_answers(answers);
 
+        //Code to save answers in memory
+        try {
+
+            //Create the new file
+            File dir = getFilesDir();
+            File file = new File(dir, "t.tmp");
+            file.delete();
+
+            dir = getFilesDir();
+            file = new File(dir, "t.tmp");
+
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(user.get_answer_list());
+            oos.writeInt(user.get_local_items_to_push_count());
+
+            oos.close();
+
+        }
+        catch (IOException e) {
+            System.out.println("Couldnt save for some reason...");
+            e.printStackTrace();
+        }
+
+        Toast.makeText(this, "You have " + user.get_local_items_to_push_count() +
+                " items responses to push", Toast.LENGTH_SHORT).show();
+        for (Answer a : user.get_answer_list()) {
+            a.print();
+        }
 
         Intent intent = new Intent(ItemListActivity.this, HomeActivity.class);
         intent.putExtra("User", user);
