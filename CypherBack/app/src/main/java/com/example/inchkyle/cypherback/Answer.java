@@ -13,6 +13,32 @@ public class Answer implements Serializable {
     String time_answered;
     String user;
 
+
+    public String getAnswer_text() {
+        return answer_text;
+    }
+
+
+    public String getLoc_id() {
+        return loc_id;
+    }
+
+
+    public String getQuestion_id() {
+        return question_id;
+    }
+
+
+    public String getTime_answered() {
+        return time_answered;
+    }
+
+
+    public String getUser() {
+        return user;
+    }
+
+
     Answer(String q_id, String a, String location_id, String time_a, String user_name) {
         this.answer_text = a;
         this.loc_id = location_id;

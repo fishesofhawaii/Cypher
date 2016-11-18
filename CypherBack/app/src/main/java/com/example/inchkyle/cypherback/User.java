@@ -12,8 +12,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Created by inchkyle on 11/1/16.
@@ -35,6 +38,7 @@ public class User implements Serializable{
 
     int local_items_to_push_count = 0;
     ArrayList<Answer> answer_list = new ArrayList<>();
+
 
     User(String id, String json_str) {
         this.payroll_id = id;
@@ -162,5 +166,45 @@ public class User implements Serializable{
 
     public void set_answer_list(ArrayList<Answer> a) {
         this.answer_list = a;
+    }
+
+    public String get_BASE_URL() {
+        return this.BASE_URL;
+    }
+
+    public StringEntity get_JSON_entity() throws JSONException, UnsupportedEncodingException {
+
+        JSONObject data = new JSONObject();
+        JSONObject answer_json = new JSONObject();
+        JSONArray answer_ary = new JSONArray();
+        JSONObject json_answer = new JSONObject();
+
+        for (Answer a : this.answer_list) {
+            String answer_text = a.getAnswer_text();
+            System.out.println("~~~~ " + answer_text);
+            if (answer_text.equals("1")){
+                answer_text = "yes";
+            }
+            else if (answer_text.equals("0")) {
+                answer_text = "no";
+            }
+
+            json_answer.put("answer_text", answer_text);
+            json_answer.put("loc_id", a.getLoc_id());
+            json_answer.put("question_id", a.getQuestion_id());
+            json_answer.put("time_answered", a.getTime_answered());
+            json_answer.put("user", a.getUser());
+
+            answer_ary.put(json_answer);
+
+        }
+
+        answer_json.put("answers", answer_ary);
+        data.put("data", answer_json);
+
+        StringEntity _JSON_entity = new StringEntity(data.toString());
+        System.out.println(data.toString(1));
+
+        return _JSON_entity;
     }
 }

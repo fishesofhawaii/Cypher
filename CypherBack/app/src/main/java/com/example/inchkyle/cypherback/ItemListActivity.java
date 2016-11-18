@@ -141,6 +141,7 @@ public class ItemListActivity extends AppCompatActivity {
             //String q_id, String a, String location_id, String time_a, String user_name
 
             //Question id and answer text
+            System.out.println("!!!!!!!" + location_id);
             Answer ans = new Answer(question_id, answer, location_id, time_answered, user.payroll_id);
             answers.add(ans);
         }
