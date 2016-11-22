@@ -4,11 +4,16 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -95,6 +100,17 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println("change color");
+//                FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.sync_btn);
+//                btn.setBackgroundTintList(ColorStateList.valueOf(R.color.AMRedDark));
+//            }
+//        }, 2000);
+
+
 
 
         v = (Vibrator) this.getApplicationContext().
@@ -170,12 +186,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void sendFinishMessage() {
                         //Last called in a success AND failure
                         if (POST_SUCCESS){
-                            user.clear_answers();
-
-                            //Delete the file
-                            File dir = getFilesDir();
-                            File file = new File(dir, "t.tmp");
-                            file.delete();
+                            post_success();
 
                         }
 
@@ -272,23 +283,18 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
 
-
-
-
-
-
-
-
-
     }
 
     //Go to the history page Eventually
     public void history_click(View v) {
         user.clear_answers();
 
-        Toast.makeText(this, "deleted file", Toast.LENGTH_SHORT).show();
+        //Delete the file
+        File dir = getFilesDir();
+        File file = new File(dir, "t.tmp");
+        file.delete();
 
-        Toast.makeText(this, "HistoryClick", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "deleted file", Toast.LENGTH_SHORT).show();
     }
 
     //User clicked on Scan barcode, bring up popup
@@ -335,4 +341,19 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+    public void post_success() {
+        System.out.println("IS IT IN POST SUCCESS");
+
+        FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.sync_btn);
+        btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00aa00")));
+
+        user.clear_answers();
+        //Delete the file
+        File dir = getFilesDir();
+        File file = new File(dir, "t.tmp");
+        file.delete();
+
+
+    }
+
 }

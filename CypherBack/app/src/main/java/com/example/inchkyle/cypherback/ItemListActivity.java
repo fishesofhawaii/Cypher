@@ -1,7 +1,9 @@
 package com.example.inchkyle.cypherback;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +31,7 @@ public class ItemListActivity extends AppCompatActivity {
     User user;
 
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
+    int item_count = 0;
 
     // RecyclerView
     private RecyclerView mRecyclerView;
@@ -126,7 +129,7 @@ public class ItemListActivity extends AppCompatActivity {
 
         ArrayList<Answer> answers = new ArrayList<>();
 
-        int item_count = 0;
+        item_count = 0;
 
         System.out.println("LOCATION QUESTIONS:");
 //        for (HashMap.Entry<String, String> entry : location_answers.entrySet()) {
@@ -167,43 +170,79 @@ public class ItemListActivity extends AppCompatActivity {
                 answers.add(ans);
             }
         }
+        // So after we go through all of the answers to the items we need to see if they actually
+        // anything, if itemcount = 0, lets just varify if they really want to discard the questions
 
-        user.add_local_items_to_push(item_count);
-        user.add_answers(answers);
 
-        //Code to save answers in memory
-        try {
+        if (item_count == 0) {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+                            reject_answers();
+                            break;
 
-            //Create the new file
-            File dir = getFilesDir();
-            File file = new File(dir, "t.tmp");
-            file.delete();
-
-            dir = getFilesDir();
-            file = new File(dir, "t.tmp");
-
-            FileOutputStream fos = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(user.get_answer_list());
-            oos.writeInt(user.get_local_items_to_push_count());
-
-            oos.close();
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            //Do nothing, they have the opportunity to answer item questions
+                            break;
+                    }
+                }
+            };
+            AlertDialog.Builder ab = new AlertDialog.Builder(ItemListActivity.this, R.style.AlertDialogTheme);
+            ab.setMessage("You have not inspected any items at this location, all progress at this " +
+                    "location will be discarded...\n\nCONTINUE ANYWAY?")
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
 
         }
-        catch (IOException e) {
-            System.out.println("Couldnt save for some reason...");
-            e.printStackTrace();
-        }
+        else {
+            user.add_local_items_to_push(item_count);
+            user.add_answers(answers);
 
-        Toast.makeText(this, "You have " + user.get_local_items_to_push_count() +
-                " items responses to push", Toast.LENGTH_SHORT).show();
-        for (Answer a : user.get_answer_list()) {
-            a.print();
-        }
+            //Code to save answers in memory
+            try {
 
+                //Create the new file
+                File dir = getFilesDir();
+                File file = new File(dir, "t.tmp");
+                file.delete();
+
+                dir = getFilesDir();
+                file = new File(dir, "t.tmp");
+
+                FileOutputStream fos = new FileOutputStream(file);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(user.get_answer_list());
+                oos.writeInt(user.get_local_items_to_push_count());
+
+                oos.close();
+
+            }
+            catch (IOException e) {
+                System.out.println("Couldnt save for some reason...");
+                e.printStackTrace();
+            }
+
+            Toast.makeText(this, "You have " + user.get_local_items_to_push_count() +
+                    " items responses to push", Toast.LENGTH_SHORT).show();
+            for (Answer a : user.get_answer_list()) {
+                a.print();
+            }
+
+            Intent intent = new Intent(ItemListActivity.this, HomeActivity.class);
+            intent.putExtra("User", user);
+            startActivity(intent);
+        }
+    }
+
+    public void reject_answers() {
         Intent intent = new Intent(ItemListActivity.this, HomeActivity.class);
         intent.putExtra("User", user);
         startActivity(intent);
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
