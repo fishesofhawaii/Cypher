@@ -4,7 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:theme="@style/MyCustomTheme"
     android:padding="16dp"
     android:background="#F5F5F5">
 

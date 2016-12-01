@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    app:theme="@style/MyCustomTheme"
     android:layout_height="match_parent"
     android:background="@drawable/border"
     android:padding="16dp">
