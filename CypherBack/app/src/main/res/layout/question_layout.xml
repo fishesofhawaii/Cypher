@@ -69,16 +69,7 @@
     </RelativeLayout>
 
 
-    <ImageView
-        app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/questionImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/questionText"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/yesNo"
-        android:layout_alignEnd="@+id/questionText"
-        android:layout_marginEnd="74dp" />
+
 
     <TextView
         android:text="TextView"

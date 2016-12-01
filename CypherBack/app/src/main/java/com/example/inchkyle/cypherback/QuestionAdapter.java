@@ -34,7 +34,6 @@ public class QuestionAdapter extends ArrayAdapter {
     }
 
     public class DataHandler {
-        ImageView image;
         TextView q;
         TextView response;
         Button yesButton;
@@ -72,7 +71,6 @@ public class QuestionAdapter extends ArrayAdapter {
             row = inflater.inflate(R.layout.question_layout, parent, false);
 
             handler = new DataHandler();
-            handler.image = (ImageView) row.findViewById(R.id.questionImage);
             handler.q = (TextView) row.findViewById(R.id.questionText);
             handler.yesButton = (Button) row.findViewById(R.id.yesButton);
             handler.noButton = (Button) row.findViewById(R.id.noButton);
@@ -96,7 +94,6 @@ public class QuestionAdapter extends ArrayAdapter {
         }
 
         handler.q.setText(question);
-        handler.image.setImageResource(provider.getResource());
 
         if (provider.getAnswer().equals("1")) {
             handler.response.setText("YES");

@@ -7,15 +7,6 @@
     android:background="@color/ArcelorMittalLightBlue"
     tools:context=".ItemListActivity">
 
-    <!--<TextView-->
-        <!--android:text="This will be replaced by a Recycle View!"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="38dp"-->
-        <!--android:id="@+id/textView"-->
-        <!--android:textSize="30sp"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_centerHorizontal="true" />-->
 
     <ListView
         android:layout_width="match_parent"

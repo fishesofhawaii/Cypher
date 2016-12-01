@@ -18,7 +18,7 @@ import android.widget.TextView;
 // (after going through scanortype)
 public class TypeBarcodeActivity extends Activity {
     EditText barcode_entered;
-    TextView barcode_shown;
+//    TextView barcode_shown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class TypeBarcodeActivity extends Activity {
 
 
         barcode_entered = (EditText) findViewById(R.id.barcode_txt);
-        barcode_shown = (TextView) findViewById(R.id.displayed_barcode_txt);
+//        barcode_shown = (TextView) findViewById(R.id.displayed_barcode_txt);
 
         barcode_entered.addTextChangedListener(new TextWatcher() {
             @Override
@@ -39,7 +39,7 @@ public class TypeBarcodeActivity extends Activity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //We want to update "barcode shown"
-                barcode_shown.setText(s.toString());
+//                barcode_shown.setText(s.toString());
             }
 
             @Override
@@ -53,8 +53,10 @@ public class TypeBarcodeActivity extends Activity {
 
         Intent returnIntent = new Intent();
 
-        returnIntent.putExtra("result", barcode_shown.getText().toString());
-        System.out.println("Giving : " + barcode_shown.getText().toString());
+//        returnIntent.putExtra("result", barcode_shown.getText().toString());
+//        System.out.println("Giving : " + barcode_shown.getText().toString());
+        returnIntent.putExtra("result", barcode_entered.getText().toString());
+        System.out.println("Giving : " + barcode_entered.getText().toString());
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }

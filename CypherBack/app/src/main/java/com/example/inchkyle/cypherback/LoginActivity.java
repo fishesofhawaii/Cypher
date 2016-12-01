@@ -31,9 +31,9 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
 //    String BASE_URL = "http://35.12.211.195:8000";
-    String BASE_URL = "http://35.11.17.117:8000";
+//    String BASE_URL = "http://35.11.17.117:8000";
 //    String BASE_URL = "http://35.12.211.199:8000/";
-//    String BASE_URL = "http://10.0.0.117:8000";
+    String BASE_URL = "http://10.0.0.117:8000";
 //    String BASE_URL = "http://35.12.211.142:8000";
 
 
