@@ -115,6 +115,8 @@ public class QuestionActivity extends AppCompatActivity {
             Intent intent = new Intent(QuestionActivity.this, ItemListActivity.class);
             intent.putExtra("User", user);
 
+            Toast.makeText(this, "Saving Answers...", Toast.LENGTH_SHORT).show();
+
             startActivity(intent);
         }
 

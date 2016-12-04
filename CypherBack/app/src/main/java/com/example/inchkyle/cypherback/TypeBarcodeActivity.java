@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 //This activity is set aside for typing the barcode. Enter text in the EditText
 //Once confirm is pressed, it is sent to the home activity for analysis
-// (after going through scanortype)
+// (after going through scanner type)
 public class TypeBarcodeActivity extends Activity {
     EditText barcode_entered;
     TextView barcode_shown;

@@ -160,6 +160,10 @@ public class User implements Serializable{
         return this.answer_list;
     }
 
+    public String get_payroll_id() {
+        return payroll_id;
+    }
+
     public void set_local_items_to_push_count(int i) {
         this.local_items_to_push_count = i;
     }

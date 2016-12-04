@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -27,11 +28,12 @@ import cz.msebera.android.httpclient.util.EntityUtils;
 public class LoginActivity extends AppCompatActivity {
     String payroll_id = "nick"; //This is their payroll id
     String json_string;
-    Boolean LOGIN_SUCCESS = false;
+//    Boolean LOGIN_SUCCESS = false;
     ProgressDialog progressDialog;
+    EditText input_email;
 
 //    String BASE_URL = "http://35.12.211.195:8000";
-    String BASE_URL = "http://35.11.17.117:8000";
+    String BASE_URL = "http://35.12.211.218:8000";
 //    String BASE_URL = "http://35.12.211.199:8000/";
 //    String BASE_URL = "http://10.0.0.117:8000";
 //    String BASE_URL = "http://35.12.211.142:8000";
@@ -72,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                                     public void sendResponseMessage(HttpResponse response) throws IOException {
                                         json_string = EntityUtils.toString(response.getEntity());
                                         System.out.println(json_string);
-                                        LOGIN_SUCCESS = true;
 
                                     }
 
@@ -84,9 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void sendFinishMessage() {
                                         //Last called in a success AND failure
-                                        if (LOGIN_SUCCESS){
-                                            go_to_home();
-                                        }
+                                        go_to_home();
 
                                     }
 
@@ -109,6 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                                     public void sendFailureMessage(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                                         //Second to last called in a failure
                                         System.out.println("Send fail");
+                                        progressDialog.dismiss();
+
                                     }
 
 //           TODO: Display message if user is unable to log in
@@ -182,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                                 });
 
                     }
-                }, 2000);
+                }, 1500);
 
         progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -197,8 +198,12 @@ public class LoginActivity extends AppCompatActivity {
 
         progressDialog.dismiss();
 
+        input_email = (EditText) findViewById(R.id.input_email);
+
+        String typed_id = input_email.getText().toString().toLowerCase();
+
         Intent login_intent = new Intent(LoginActivity.this, HomeActivity.class);
-        user = new User(payroll_id, json_string);
+        user = new User(typed_id, json_string);
         user.set_BASE_URL(BASE_URL);
 
         login_intent.putExtra("User", user);

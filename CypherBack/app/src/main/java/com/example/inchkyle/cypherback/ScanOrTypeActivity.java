@@ -72,8 +72,8 @@ public class ScanOrTypeActivity extends Activity{
                 finish();
             }
         }
-        else {
 
+        else {
             //BELOW IS FOR THE CAMERA
             //retrieve scan result
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
@@ -95,6 +95,7 @@ public class ScanOrTypeActivity extends Activity{
 
     public void type_barcode(View v){
         Intent intent = new Intent(ScanOrTypeActivity.this, TypeBarcodeActivity.class);
+
         startActivityForResult(intent, 30);
 
     }

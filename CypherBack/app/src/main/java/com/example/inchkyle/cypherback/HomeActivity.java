@@ -1,6 +1,7 @@
 package com.example.inchkyle.cypherback;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -51,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
     User user;
     Boolean POST_SUCCESS = false;
-
+    ProgressDialog progressDialog;
 
     Vibrator v;
 
@@ -121,6 +122,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (home_intent != null) {
             user = (User) home_intent.getSerializableExtra("User");
+
             user.set_locations();
 
             //If there are no answers, we are going to try to load some
@@ -155,11 +157,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     //Clicking the update update button should retrieve database values for the employee again
-    public void update_click(View v) throws JSONException, UnsupportedEncodingException {
+    public void update_click(final View v) throws JSONException, UnsupportedEncodingException {
         System.out.println("GOING TO UPDATE THE DATABASE\n");
 
         String BASE_URL = user.get_BASE_URL();
-        StringEntity entity = user.get_JSON_entity();
+        final StringEntity entity = user.get_JSON_entity();
 
         final AsyncHttpClient client = new AsyncHttpClient();
         final RequestParams params = new RequestParams();
@@ -167,121 +169,140 @@ public class HomeActivity extends AppCompatActivity {
         final String POST_address = BASE_URL + "/questions/addanswers/";
         //This is the post with the employee id (the payroll_id)
 
-        client.post(getBaseContext(), POST_address,
-                entity, "application/json", new ResponseHandlerInterface() {
 
-                    @Override
-                    public void sendResponseMessage(HttpResponse response) throws IOException {
-                        System.out.println("1");
-                        POST_SUCCESS = true;
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        // On complete call either onLoginSuccess or onLoginFailed
+                        // onLoginSuccess();
+                        // onLoginFailed();
+                        client.post(getBaseContext(), POST_address,
+                                entity, "application/json", new ResponseHandlerInterface() {
+
+                                    @Override
+                                    public void sendResponseMessage(HttpResponse response) throws IOException {
+                                        System.out.println("1");
+                                        POST_SUCCESS = true;
+
+                                    }
+
+                                    @Override
+                                    public void sendStartMessage() {
+
+                                    }
+
+                                    @Override
+                                    public void sendFinishMessage() {
+                                        //Last called in a success AND failure
+                                        if (POST_SUCCESS) {
+                                            post_success();
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void sendProgressMessage(long bytesWritten, long bytesTotal) {
+
+                                    }
+
+                                    @Override
+                                    public void sendCancelMessage() {
+
+                                    }
+
+                                    @Override
+                                    public void sendSuccessMessage(int statusCode, Header[] headers, byte[] responseBody) {
+
+                                    }
+
+                                    @Override
+                                    public void sendFailureMessage(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                        //Second to last called in a failure
+                                        System.out.println("Send fail");
+                                    }
+
+                                    //           TODO: Display message if user is unable to log in
+
+                                    @Override
+                                    public void sendRetryMessage(int retryNo) {
+                                        //Gets called every attempt to send POST
+                                        System.out.println("Send Retry");
+
+                                    }
+
+                                    @Override
+                                    public URI getRequestURI() {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public void setRequestURI(URI requestURI) {
+
+                                    }
+
+                                    @Override
+                                    public Header[] getRequestHeaders() {
+                                        return new Header[0];
+                                    }
+
+                                    @Override
+                                    public void setRequestHeaders(Header[] requestHeaders) {
+
+                                    }
+
+                                    @Override
+                                    public boolean getUseSynchronousMode() {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public void setUseSynchronousMode(boolean useSynchronousMode) {
+
+                                    }
+
+                                    @Override
+                                    public boolean getUsePoolThread() {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public void setUsePoolThread(boolean usePoolThread) {
+
+                                    }
+
+                                    @Override
+                                    public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+
+                                    }
+
+                                    @Override
+                                    public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+
+                                    }
+
+                                    @Override
+                                    public Object getTag() {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public void setTag(Object TAG) {
+
+                                    }
+                                });
 
                     }
+                }, 1500);
 
-                    @Override
-                    public void sendStartMessage() {
 
-                    }
 
-                    @Override
-                    public void sendFinishMessage() {
-                        //Last called in a success AND failure
-                        if (POST_SUCCESS){
-                            post_success();
 
-                        }
-
-                    }
-
-                    @Override
-                    public void sendProgressMessage(long bytesWritten, long bytesTotal) {
-
-                    }
-
-                    @Override
-                    public void sendCancelMessage() {
-
-                    }
-
-                    @Override
-                    public void sendSuccessMessage(int statusCode, Header[] headers, byte[] responseBody) {
-
-                    }
-
-                    @Override
-                    public void sendFailureMessage(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        //Second to last called in a failure
-                        System.out.println("Send fail");
-                    }
-
-    //           TODO: Display message if user is unable to log in
-
-                    @Override
-                    public void sendRetryMessage(int retryNo) {
-                        //Gets called every attempt to send POST
-                        System.out.println("Send Retry");
-
-                    }
-
-                    @Override
-                    public URI getRequestURI() {
-                        return null;
-                    }
-
-                    @Override
-                    public void setRequestURI(URI requestURI) {
-
-                    }
-
-                    @Override
-                    public Header[] getRequestHeaders() {
-                        return new Header[0];
-                    }
-
-                    @Override
-                    public void setRequestHeaders(Header[] requestHeaders) {
-
-                    }
-
-                    @Override
-                    public boolean getUseSynchronousMode() {
-                        return false;
-                    }
-
-                    @Override
-                    public void setUseSynchronousMode(boolean useSynchronousMode) {
-
-                    }
-
-                    @Override
-                    public boolean getUsePoolThread() {
-                        return false;
-                    }
-
-                    @Override
-                    public void setUsePoolThread(boolean usePoolThread) {
-
-                    }
-
-                    @Override
-                    public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-
-                    }
-
-                    @Override
-                    public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-
-                    }
-
-                    @Override
-                    public Object getTag() {
-                        return null;
-                    }
-
-                    @Override
-                    public void setTag(Object TAG) {
-
-                    }
-                });
+        progressDialog = new ProgressDialog(HomeActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Connecting to our Servers...");
+        progressDialog.show();
 
     }
 
@@ -342,10 +363,22 @@ public class HomeActivity extends AppCompatActivity {
 
     }
     public void post_success() {
+        progressDialog.dismiss();
+
         System.out.println("IS IT IN POST SUCCESS");
 
         FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.sync_btn);
-        btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00aa00")));
+        System.out.println("Successful post");
+
+        runOnUiThread(new Runnable(){
+
+            @Override
+            public void run(){
+                //update ui here
+                // display toast here
+                Toast.makeText(getApplicationContext(), "Successfully Updated the Database", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         user.clear_answers();
         //Delete the file
