@@ -69,7 +69,7 @@ public class ItemListActivity extends Activity {
         Location location = user.get_location(user.current_barcode);
 
         // Change title here
-        String title = location.loc_barcode_name + " Items";
+        String title = location.loc_barcode_name + " Devices";
         setTitle(title);
 
 //        Replace with cardview

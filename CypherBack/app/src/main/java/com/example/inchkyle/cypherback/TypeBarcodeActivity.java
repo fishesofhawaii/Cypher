@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,6 +22,9 @@ public class TypeBarcodeActivity extends Activity {
     EditText barcode_entered;
 //    TextView barcode_shown;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,8 @@ public class TypeBarcodeActivity extends Activity {
 
         barcode_entered = (EditText) findViewById(R.id.barcode_txt);
 //        barcode_shown = (TextView) findViewById(R.id.displayed_barcode_txt);
+
+
 
         barcode_entered.addTextChangedListener(new TextWatcher() {
             @Override
@@ -47,17 +54,28 @@ public class TypeBarcodeActivity extends Activity {
                 //Not Necessary
             }
         });
+
+
+        barcode_entered.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    Intent returnIntent = new Intent();
+
+                    returnIntent.putExtra("result", barcode_entered.getText().toString());
+                    System.out.println("Giving : " + barcode_entered.getText().toString());
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+                }
+                return handled;
+            }
+        });
     }
 
-    public void confirm(View v) {
 
-        Intent returnIntent = new Intent();
 
-//        returnIntent.putExtra("result", barcode_shown.getText().toString());
-//        System.out.println("Giving : " + barcode_shown.getText().toString());
-        returnIntent.putExtra("result", barcode_entered.getText().toString());
-        System.out.println("Giving : " + barcode_entered.getText().toString());
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
-    }
+
+
+
 }
