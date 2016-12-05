@@ -10,20 +10,22 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:layout_margin="5dp"
+        android:layout_margin="16dp"
         card_view:cardCornerRadius="2dp"
         card_view:contentPadding="10dp">
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:layout_margin="16dp">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:layout_alignParentTop="true"/>
+                android:layout_alignParentTop="true"
+                android:textColor="#000000"/>
 
             <TextView
                 android:id="@+id/textView2"

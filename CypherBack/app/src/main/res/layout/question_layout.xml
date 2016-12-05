@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    app:theme="@style/MyCustomTheme"
     android:layout_height="match_parent"
     android:background="@drawable/border"
     android:padding="16dp">
@@ -38,48 +37,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="YES"/>
-    <!--<RadioGroup-->
-        <!--android:id="@+id/radio_group"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="right"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:padding="16dp">-->
-        <!--<RadioButton-->
-            <!--android:id="@+id/yesButton"-->
-            <!--android:textSize="28dp"-->
-            <!--android:layout_gravity="left"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:buttonTint="@color/AMRedDark"-->
-            <!--android:layout_marginBottom="16dp"-->
-            <!--android:text="Yes"-->
-            <!--android:textColor="#000000"/>-->
-        <!--<RadioButton-->
-            <!--android:id="@+id/noButton"-->
-            <!--android:textSize="28dp"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="No"-->
-            <!--android:textColor="#000000"-->
-            <!--android:buttonTint="@color/AMRedDark"-->
-            <!--android:layout_gravity="left"/>-->
-    <!--</RadioGroup>-->
 
     </RelativeLayout>
 
-
     <ImageView
-        app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/questionImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/questionText"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/yesNo"
-        android:layout_alignEnd="@+id/questionText"
-        android:layout_marginEnd="74dp" />
+        android:id="@+id/yesCheck"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/border_circle"
+        android:layout_below="@id/questionText"
+        android:visibility="invisible"/>
+
+
+
+
+
 
     <TextView
         android:text="TextView"

@@ -1,6 +1,7 @@
 package com.example.inchkyle.cypherback;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 
 //this is set aside for questions to be displayed on the screen, answers will be recorded here
-public class QuestionActivity extends AppCompatActivity {
+public class QuestionActivity extends Activity {
     Item is_item = null;
     User user;
     @Override
@@ -70,7 +71,7 @@ public class QuestionActivity extends AppCompatActivity {
             String title = item.device_name +  " Item Questions";
             setTitle(title);
 
-            textView.setText(item.device_name + " Questions \n(Barcode #" + user.current_barcode + ")");
+//            textView.setText(item.device_name + " Questions \n(Barcode #" + user.current_barcode + ")");
 
             ListView listview = (ListView)findViewById(R.id.questions_listview);
             QuestionAdapter adapter = new QuestionAdapter(getApplicationContext(), R.layout.question_layout);

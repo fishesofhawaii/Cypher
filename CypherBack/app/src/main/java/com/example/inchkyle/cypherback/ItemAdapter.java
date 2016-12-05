@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class RVAdapter extends RecyclerView
-        .Adapter<RVAdapter
+public class ItemAdapter extends RecyclerView
+        .Adapter<ItemAdapter
         .DataObjectHolder> {
-    private static String LOG_TAG = "RVAdapter";
+    private static String LOG_TAG = "ItemAdapter";
     private ArrayList<Item.Object> mDataset;
     private static MyClickListener myClickListener;
 
@@ -40,7 +40,7 @@ public class RVAdapter extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public RVAdapter(ArrayList<Item.Object> myDataset) {
+    public ItemAdapter(ArrayList<Item.Object> myDataset) {
         mDataset = myDataset;
     }
 

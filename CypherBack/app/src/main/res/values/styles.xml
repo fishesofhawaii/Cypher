@@ -36,12 +36,17 @@
         <item name="android:background">@color/AMRedDark</item>
     </style>
 
-    <style name="MyCustomTheme" parent="@android:style/Theme.Holo.Light">
+    <style name="MyCustomTheme" parent="@android:style/Theme.Holo">
         <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
-    <style name="MyActionBarTheme" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <style name="MyActionBarTheme" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:textColor">#FFFFFF</item>
         <item name="android:background">#444547</item>
+        <item name="android:logo">@android:color/transparent</item>
+        <item name="android:height">64dp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 

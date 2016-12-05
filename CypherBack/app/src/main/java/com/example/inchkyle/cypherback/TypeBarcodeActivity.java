@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,9 +26,11 @@ import java.util.HashMap;
 // (after going through scanner type)
 public class TypeBarcodeActivity extends Activity {
     EditText barcode_entered;
-    TextView barcode_shown;
     User user;
     boolean is_item = false;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +50,9 @@ public class TypeBarcodeActivity extends Activity {
             is_item = true;
         }
 
-            barcode_entered = (EditText) findViewById(R.id.barcode_txt);
-        barcode_shown = (TextView) findViewById(R.id.displayed_barcode_txt);
+        barcode_entered = (EditText) findViewById(R.id.barcode_txt);
+//        barcode_shown = (TextView) findViewById(R.id.displayed_barcode_txt);
+
 
         barcode_entered.addTextChangedListener(new TextWatcher() {
             @Override
@@ -58,7 +63,7 @@ public class TypeBarcodeActivity extends Activity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //We want to update "barcode shown"
-                barcode_shown.setText(s.toString());
+//                barcode_shown.setText(s.toString());
             }
 
             @Override
@@ -66,18 +71,27 @@ public class TypeBarcodeActivity extends Activity {
                 //Not Necessary
             }
         });
+
+        barcode_entered.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    confirm();
+                }
+                return handled;
+            }
+        });
     }
 
-    public void confirm(View v) {
-        String entered_code = barcode_shown.getText().toString();
+    public void confirm() {
+        String entered_code = barcode_entered.getText().toString();
 
 
         if (is_item) {
             Item i = user.get_location(user.location_barcode).get_item(entered_code);
 
             if (i == null) {
-                Toast.makeText(this, "This item is not in the records...", Toast.LENGTH_SHORT).show();
-
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -102,8 +116,8 @@ public class TypeBarcodeActivity extends Activity {
             }
             else {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", barcode_shown.getText().toString());
-                System.out.println("Giving : " + barcode_shown.getText().toString());
+                returnIntent.putExtra("result", entered_code);
+                System.out.println("Giving : " + entered_code);
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
@@ -118,8 +132,8 @@ public class TypeBarcodeActivity extends Activity {
             else {
                 if (l.get_user_assigned().toLowerCase().equals(user.get_payroll_id())){
                     Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result", barcode_shown.getText().toString());
-                    System.out.println("Giving : " + barcode_shown.getText().toString());
+                    returnIntent.putExtra("result", entered_code);
+                    System.out.println("Giving : " + entered_code);
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
 
@@ -158,6 +172,7 @@ public class TypeBarcodeActivity extends Activity {
 
     private void continue_anyway() {
         Intent returnIntent = new Intent();
+        String entered_code = barcode_entered.getText().toString();
 
         //So they asserted us that the barcode that they gave is truly the device, we will let them
         //Override
@@ -173,12 +188,14 @@ public class TypeBarcodeActivity extends Activity {
             }
         }
         else {
-            returnIntent.putExtra("result", barcode_shown.getText().toString());
-            System.out.println("Giving : " + barcode_shown.getText().toString());
+            returnIntent.putExtra("result", entered_code);
+            System.out.println("Giving : " + entered_code);
         }
 
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
 
+
     }
+
 }

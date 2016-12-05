@@ -4,32 +4,23 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:theme="@style/MyCustomTheme"
     android:padding="16dp"
     android:background="#F5F5F5">
 
     <!--TODO: Change Action Bar color and text-->
 
-    <TextView
-        android:text="Questions Screen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="30sp"
-        android:id="@+id/textView" />
 
     <LinearLayout
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center|center_vertical">
         <ListView
             android:id="@+id/questions_listview"
             android:layout_width="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_height="wrap_content"
-            android:drawSelectorOnTop="false"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_below="@+id/textView" />
 
@@ -40,11 +31,12 @@
             android:layout_height="wrap_content"
             android:onClick="confirm_answers"
             android:layout_below="@+id/questions_listview"
+            android:gravity="center"
             android:layout_weight="0"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/AMRedDark" />
+            style="@style/Widget.AppCompat.Button.Colored" />
     </LinearLayout>
+
+
 
 
 </RelativeLayout>

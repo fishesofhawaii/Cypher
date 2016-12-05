@@ -1,10 +1,10 @@
 package com.example.inchkyle.cypherback;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,7 +28,7 @@ import java.util.HashMap;
 
 //The purpose of this activity is to show all the Items, when clicked user will get popup
 //to scan or type, then will be redirected to specific item questions
-public class ItemListActivity extends AppCompatActivity {
+public class ItemListActivity extends Activity {
     User user;
 
     static final int BARCODE_METHOD_REQUEST = 20;  // The request code
@@ -49,8 +50,11 @@ public class ItemListActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RVAdapter(getDataSet());
+        mAdapter = new ItemAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
+
+
+
 
 
         // BELOW is from LOGIN
@@ -60,6 +64,13 @@ public class ItemListActivity extends AppCompatActivity {
             user = (User) home_intent.getSerializableExtra("User");
 
         }
+
+
+        Location location = user.get_location(user.current_barcode);
+
+        // Change title here
+//        String title = location.loc_barcode_name + " Devices";
+//        setTitle(title);
 
 //        Replace with cardview
         ArrayAdapter<String> itemsAdapter =
@@ -95,6 +106,8 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
 
@@ -102,7 +115,7 @@ public class ItemListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ((RVAdapter) mAdapter).setOnItemClickListener(new RVAdapter
+        ((ItemAdapter) mAdapter).setOnItemClickListener(new ItemAdapter
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -120,6 +133,8 @@ public class ItemListActivity extends AppCompatActivity {
         }
         return results;
     }
+
+
 
     public void submit_answers(View v) {
         Location location = user.get_location(user.location_barcode);
