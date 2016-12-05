@@ -75,14 +75,18 @@ public class Location implements Serializable {
     //This sets the basic information for each item at each location such as name and type
     //NOTE: this does not populate the questions
     public void set_items() {
+        //Device names
+        //Valid Items
+        //this.items
 
+        device_names.clear();
+        valid_items.clear();
+        items.clear();
         try {
             JSONObject json_obj = new JSONObject(json_string);
             JSONArray json_ary;
 
             json_ary = json_obj.getJSONArray("devices");
-
-
 
 
             for (int j = 0; j < json_ary.length(); j++) {
@@ -101,8 +105,6 @@ public class Location implements Serializable {
                 for (int i = 0; i < barcode_array.length(); i++){
                     possible_barcodes.add(barcode_array.get(i).toString());
                 }
-
-
 
 //                String item_type = String.valueOf(item.getString("item_type"));
 //                String barcode_num = String.valueOf(item.getString("barcode_num"));

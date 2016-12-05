@@ -75,7 +75,7 @@
             android:id="@+id/upcoming"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Upcoming Deadlines"
+            android:text="Your Locations"
             android:textColor="@color/white"
             android:background="#444547"
             android:textSize="24sp"

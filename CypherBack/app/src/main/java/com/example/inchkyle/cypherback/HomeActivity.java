@@ -62,43 +62,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.home);
 
 
-        // Construct the data source
-        ArrayList<Location.Object> arrayOfLocations = new ArrayList<Location.Object>();
-        // Create the adapter to convert the array to views
-        LocationAdapter adapter = new LocationAdapter(this, arrayOfLocations);
-        // Attach the adapter to a ListView
-        ListView listView = (ListView) findViewById(R.id.mobile_list);
-        listView.setAdapter(adapter);
-
-
-        // Add item to adapter
-        Location.Object newLocation0 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation0);
-        Location.Object newLocation1 = new Location.Object("1 year", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation1);
-        Location.Object newLocation2 = new Location.Object("3 months", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation2);
-        Location.Object newLocation3 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation3);
-        Location.Object newLocation4 = new Location.Object("1 year", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation4);
-        Location.Object newLocation5 = new Location.Object("3 months", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation5);
-        Location.Object newLocation6 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation6);
-        Location.Object newLocation7 = new Location.Object("1 year", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation7);
-        Location.Object newLocation8 = new Location.Object("3 months", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation8);
-        Location.Object newLocation9 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation9);
-        Location.Object newLocation10 = new Location.Object("1 year", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation10);
-        Location.Object newLocation11 = new Location.Object("3 months", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation11);
-        Location.Object newLocation12 = new Location.Object("30 days", "This view will be populated with location details", "Plant A");
-        adapter.add(newLocation12);
-
 
 
 //        final Handler handler = new Handler();
@@ -154,6 +117,44 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         }
+
+
+        // Construct the data source
+        ArrayList<Location.Object> arrayOfLocations = new ArrayList<Location.Object>();
+        // Create the adapter to convert the array to views
+        LocationAdapter adapter = new LocationAdapter(this, arrayOfLocations);
+        // Attach the adapter to a ListView
+        ListView listView = (ListView) findViewById(R.id.mobile_list);
+        listView.setAdapter(adapter);
+
+
+
+
+        for (Location l : user.get_my_locations()) {
+            System.out.println("You have location " + l.get_location_id());
+            String items = "";
+
+            for (Item i : l.items.values()) {
+                items += i.device_name + ", ";
+            }
+            //Get rid of the extra comma and space
+            items = items.substring(0, items.length() - 2);
+
+            Location.Object newLocation = new Location.Object("LOC " + l.get_location_id(),
+                    l.loc_barcode_name, items);
+
+            adapter.add(newLocation);
+        }
+        if (user.get_my_locations().size() == 0){
+            Location.Object newLocation = new Location.Object("",
+                    "You currently have no locations assigned to you.",
+                    "Please ensure that you entered your id correctly: \n" +
+                            "You are logged in as: '" + user.payroll_id + "'");
+            adapter.add(newLocation);
+
+        }
+
+
     }
 
     //Clicking the update update button should retrieve database values for the employee again
@@ -296,11 +297,10 @@ public class HomeActivity extends AppCompatActivity {
                 }, 1500);
 
 
-
-
         progressDialog = new ProgressDialog(HomeActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage("Connecting to our Servers...");
         progressDialog.show();
 
@@ -308,14 +308,8 @@ public class HomeActivity extends AppCompatActivity {
 
     //Go to the history page Eventually
     public void history_click(View v) {
-        user.clear_answers();
+        Toast.makeText(this, "History Clicked", Toast.LENGTH_SHORT).show();
 
-        //Delete the file
-        File dir = getFilesDir();
-        File file = new File(dir, "t.tmp");
-        file.delete();
-
-        Toast.makeText(this, "deleted file", Toast.LENGTH_SHORT).show();
     }
 
     //User clicked on Scan barcode, bring up popup

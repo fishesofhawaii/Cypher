@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText input_email;
 
 //    String BASE_URL = "http://35.12.211.195:8000";
-    String BASE_URL = "http://35.12.211.218:8000";
+    String BASE_URL = "http://35.12.211.180:8000";
 //    String BASE_URL = "http://35.12.211.199:8000/";
 //    String BASE_URL = "http://35.12.211.142:8000";
 
@@ -115,7 +115,11 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void sendRetryMessage(int retryNo) {
                                         //Gets called every attempt to send POST
-                                        System.out.println("Send Retry");
+                                        System.out.println("Send Retry" + retryNo);
+
+                                        if (retryNo > 1) {
+                                            client.cancelAllRequests(true);
+                                        }
 
                                     }
 
@@ -186,6 +190,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 

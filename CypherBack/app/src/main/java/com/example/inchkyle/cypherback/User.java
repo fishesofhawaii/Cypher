@@ -35,6 +35,7 @@ public class User implements Serializable{
     ArrayList<String> valid_item_barcodes = new ArrayList<>();
     ArrayList<String> valid_locations = new ArrayList<>();
     HashMap<String, Location> locations = new HashMap<>();
+    ArrayList<Location> my_locations = new ArrayList<>();
 
     int local_items_to_push_count = 0;
     ArrayList<Answer> answer_list = new ArrayList<>();
@@ -48,7 +49,7 @@ public class User implements Serializable{
 
     //This populates the hashmap that has the Locations in it. It also populates "valid_locations"
     public void set_locations() {
-
+        my_locations.clear();
         try {
             JSONObject json_obj = new JSONObject(employee_json);
             JSONArray json_ary;
@@ -71,6 +72,12 @@ public class User implements Serializable{
                 l.set_loc_barcode_name(loc_barcode_name);
                 l.set_location_id(location_id);
                 l.set_user_assigned(user_assigned);
+
+                //If the user assigned is THIS user, add it to my_locations
+                if (user_assigned.toLowerCase().equals(payroll_id)) {
+                    l.set_items();
+                    my_locations.add(l);
+                }
 
                 this.locations.put(loc_barcode_num, l);
 
@@ -159,6 +166,10 @@ public class User implements Serializable{
     //If there are no answers, return true
     public boolean no_answers() {
         return this.answer_list.size() == 0;
+    }
+
+    public ArrayList<Location> get_my_locations() {
+        return my_locations;
     }
 
     public ArrayList<Answer> get_answer_list() {
