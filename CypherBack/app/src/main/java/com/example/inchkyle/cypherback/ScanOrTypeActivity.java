@@ -27,13 +27,14 @@ import com.google.zxing.integration.android.IntentResult;
 //This is a popup window
 public class ScanOrTypeActivity extends Activity{
     static final int TYPE_METHOD_REQUEST = 30;  // The request code for typing
+    User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.scan_or_type_popup);
-
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -94,7 +95,17 @@ public class ScanOrTypeActivity extends Activity{
     }
 
     public void type_barcode(View v){
+        Intent home_intent = getIntent();
+
+        if (home_intent != null) {
+            user = (User) home_intent.getSerializableExtra("User");
+            System.out.println("Got the data");
+        }
+        System.out.println("Got the data");
+
+
         Intent intent = new Intent(ScanOrTypeActivity.this, TypeBarcodeActivity.class);
+        intent.putExtra("User", user);
 
         startActivityForResult(intent, 30);
 

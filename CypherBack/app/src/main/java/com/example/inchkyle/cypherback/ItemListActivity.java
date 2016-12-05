@@ -88,6 +88,8 @@ public class ItemListActivity extends AppCompatActivity {
 
 
                 Intent typeLocation_intent = new Intent(ItemListActivity.this, ScanOrTypeActivity.class);
+                typeLocation_intent.putExtra("User", user);
+
                 startActivityForResult(typeLocation_intent, BARCODE_METHOD_REQUEST);
 
             }
@@ -132,9 +134,6 @@ public class ItemListActivity extends AppCompatActivity {
         item_count = 0;
 
         System.out.println("LOCATION QUESTIONS:");
-//        for (HashMap.Entry<String, String> entry : location_answers.entrySet()) {
-//            System.out.println("Q : " + entry.getKey() + "\tA : " + entry.getValue());
-//        }
 
         for (HashMap.Entry<String, String> entry : location_answers.entrySet()) {
             String question = entry.getKey();
@@ -233,6 +232,7 @@ public class ItemListActivity extends AppCompatActivity {
             }
 
             Intent intent = new Intent(ItemListActivity.this, HomeActivity.class);
+            user.home_page_reset();
             intent.putExtra("User", user);
             startActivity(intent);
         }
@@ -240,6 +240,7 @@ public class ItemListActivity extends AppCompatActivity {
 
     public void reject_answers() {
         Intent intent = new Intent(ItemListActivity.this, HomeActivity.class);
+        user.home_page_reset();
         intent.putExtra("User", user);
         startActivity(intent);
 

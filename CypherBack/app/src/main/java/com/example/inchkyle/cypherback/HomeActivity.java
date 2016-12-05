@@ -320,8 +320,10 @@ public class HomeActivity extends AppCompatActivity {
 
     //User clicked on Scan barcode, bring up popup
     public void scan_barcode_click(View v) {
-        Intent typeLocation_intent = new Intent(HomeActivity.this, ScanOrTypeActivity.class);
-        startActivityForResult(typeLocation_intent, BARCODE_METHOD_REQUEST);
+        Intent type_location_intent = new Intent(HomeActivity.this, ScanOrTypeActivity.class);
+        type_location_intent.putExtra("User", user);
+
+        startActivityForResult(type_location_intent, BARCODE_METHOD_REQUEST);
         System.out.println("Scan barcode click");
 
     }

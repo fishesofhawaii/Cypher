@@ -61,7 +61,7 @@ public class User implements Serializable{
                 String loc_barcode_num = location.get("loc_barcode_num").toString();
                 String loc_barcode_name = location.get("loc_barcode_name").toString();
                 int location_id = location.getInt("location_id");
-//                String user_assigned = location.get("user_assigned").toString();
+                String user_assigned = location.get("user_assigned").toString();
 
                 valid_locations.add(loc_barcode_num);
 
@@ -70,7 +70,7 @@ public class User implements Serializable{
                 //And then set extras
                 l.set_loc_barcode_name(loc_barcode_name);
                 l.set_location_id(location_id);
-//                l.set_user_assigned(user_assigned);
+                l.set_user_assigned(user_assigned);
 
                 this.locations.put(loc_barcode_num, l);
 
@@ -139,6 +139,11 @@ public class User implements Serializable{
         for (Answer a : _answer_list) {
             this.answer_list.add(a);
         }
+    }
+
+    public void home_page_reset() {
+        this.current_barcode = null;
+        this.location_barcode = null;
     }
 
     //This will be called after all the answers are pushed up

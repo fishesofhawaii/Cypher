@@ -189,6 +189,14 @@ public class Location implements Serializable {
         return items.get(s);
     }
 
+    public void set_user_assigned(String _user_assigned) {
+        this.user_assigned = _user_assigned;
+    }
+
+    public String get_user_assigned() {
+        return user_assigned;
+    }
+
 
     public static class Object {
         public String date;
