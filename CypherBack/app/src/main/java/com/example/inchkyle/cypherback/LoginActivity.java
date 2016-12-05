@@ -28,7 +28,7 @@ import cz.msebera.android.httpclient.util.EntityUtils;
 public class LoginActivity extends AppCompatActivity {
     String payroll_id = "nick"; //This is their payroll id
     String json_string;
-//    Boolean LOGIN_SUCCESS = false;
+    Boolean LOGIN_SUCCESS = true;
     ProgressDialog progressDialog;
     EditText input_email;
 
@@ -83,8 +83,12 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void sendFinishMessage() {
                                         //Last called in a success AND failure
-                                        go_to_home();
-
+                                        if (LOGIN_SUCCESS) {
+                                            go_to_home();
+                                        }
+                                        else {
+                                            LOGIN_SUCCESS = true;
+                                        }
                                     }
 
                                     @Override
@@ -99,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     @Override
                                     public void sendSuccessMessage(int statusCode, Header[] headers, byte[] responseBody) {
-
+                                        LOGIN_SUCCESS = true;
                                     }
 
                                     @Override
@@ -118,7 +122,17 @@ public class LoginActivity extends AppCompatActivity {
                                         System.out.println("Send Retry" + retryNo);
 
                                         if (retryNo > 1) {
-                                            client.cancelAllRequests(true);
+                                            client.getHttpClient().getConnectionManager().shutdown();
+
+                                            LOGIN_SUCCESS = false;
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(LoginActivity.this,
+                                                            "Login failed, check connection and try again",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                         }
 
                                     }
