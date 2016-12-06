@@ -33,15 +33,12 @@ public class LoginActivity extends AppCompatActivity {
     EditText input_email;
 
 //    String BASE_URL = "http://35.12.211.195:8000";
-<<<<<<< HEAD
 //    String BASE_URL = "http://35.12.211.180:8000";
-=======
     String BASE_URL = "http://35.12.211.83:8000";
->>>>>>> 5b00ff20c520b0284f193f7dafa56598ee1d988a
 //    String BASE_URL = "http://35.12.211.199:8000/";
 //    String BASE_URL = "http://35.12.211.142:8000";
 
-    String BASE_URL = "http://35.12.212.236:8000";
+//    String BASE_URL = "http://35.12.212.236:8000";
 
 
 
