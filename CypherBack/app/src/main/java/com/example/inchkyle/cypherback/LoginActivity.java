@@ -50,6 +50,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+    }
+
     public void log_in(View v) {
         final AsyncHttpClient client = new AsyncHttpClient();
         final RequestParams params = new RequestParams();

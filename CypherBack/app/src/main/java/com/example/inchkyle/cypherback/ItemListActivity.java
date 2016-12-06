@@ -35,10 +35,14 @@ public class ItemListActivity extends Activity {
     int item_count = 0;
 
     // RecyclerView
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private static String LOG_TAG = "ItemListActivity";
+//    private RecyclerView mRecyclerView;
+//    private RecyclerView.Adapter mAdapter;
+//    private RecyclerView.LayoutManager mLayoutManager;
+//    private static String LOG_TAG = "ItemListActivity";
+
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +50,14 @@ public class ItemListActivity extends Activity {
         setContentView(R.layout.items_screen);
 
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(false);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ItemAdapter(getDataSet());
-        mRecyclerView.setAdapter(mAdapter);
+//        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+//        mRecyclerView.setHasFixedSize(false);
+//        mLayoutManager = new LinearLayoutManager(this);
+//        mRecyclerView.setLayoutManager(mLayoutManager);
+//        mAdapter = new ItemAdapter(getDataSet());
+//        mRecyclerView.setAdapter(mAdapter);
 
 
-
-
-
-        // BELOW is from LOGIN
         Intent home_intent = getIntent();
 
         if (home_intent != null) {
@@ -65,16 +65,15 @@ public class ItemListActivity extends Activity {
 
         }
 
-
-        Location location = user.get_location(user.current_barcode);
+        Location location = user.get_location(user.location_barcode);
 
         // Change title here
-//        String title = location.loc_barcode_name + " Devices";
-//        setTitle(title);
+        String title = location.loc_barcode_name + " Devices";
+        setTitle(title);
 
 //        Replace with cardview
         ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                new ArrayAdapter<>(this, R.layout.item_text_view,
                         new ArrayList<>(user.get_location(
                                 user.location_barcode).get_device_names()));
 
@@ -88,9 +87,21 @@ public class ItemListActivity extends Activity {
 
                 Location location = user.get_location(user.location_barcode);
                 Item this_item = location.get_item_by_unique(location.get_valid_items().get(position));
+                if (this_item.get_possible_barcodes().size() == 0){
+                    Toast.makeText(ItemListActivity.this, "ASK YOUR ADMIN TO ADD BARCODES FOR THIS " +
+                            "DEVICE", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    user.set_current_barcode(this_item.get_possible_barcodes().get(0));
 
+                    user.set_valid_item_barcodes(this_item.get_possible_barcodes());
+
+                    Intent typeLocation_intent = new Intent(ItemListActivity.this, ScanOrTypeActivity.class);
+                    typeLocation_intent.putExtra("User", user);
+
+                    startActivityForResult(typeLocation_intent, BARCODE_METHOD_REQUEST);
+                }
                 //This sets the valid barcodes for the current item
-                user.set_valid_item_barcodes(this_item.get_possible_barcodes());
 
 
 //                user.set_current_barcode(user.get_location(user.
@@ -98,41 +109,35 @@ public class ItemListActivity extends Activity {
 
 
 
-                Intent typeLocation_intent = new Intent(ItemListActivity.this, ScanOrTypeActivity.class);
-                typeLocation_intent.putExtra("User", user);
-
-                startActivityForResult(typeLocation_intent, BARCODE_METHOD_REQUEST);
 
             }
         });
 
-
-
     }
 
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ((ItemAdapter) mAdapter).setOnItemClickListener(new ItemAdapter
-                .MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                Log.i(LOG_TAG, " Clicked on Item " + position);
-            }
-        });
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        ((ItemAdapter) mAdapter).setOnItemClickListener(new ItemAdapter
+//                .MyClickListener() {
+//            @Override
+//            public void onItemClick(int position, View v) {
+//                Log.i(LOG_TAG, " Clicked on Item " + position);
+//            }
+//        });
+//    }
 
-    private ArrayList<Item.Object> getDataSet() {
-        ArrayList results = new ArrayList<Item.Object>();
-        for (int index = 0; index < 5; index++) {
-            Item.Object obj = new Item.Object("Some Primary Text " + index,
-                    "Secondary " + index);
-            results.add(index, obj);
-        }
-        return results;
-    }
+//    private ArrayList<Item.Object> getDataSet() {
+//        ArrayList results = new ArrayList<Item.Object>();
+//        for (int index = 0; index < 5; index++) {
+//            Item.Object obj = new Item.Object("Some Primary Text " + index,
+//                    "Secondary " + index);
+//            results.add(index, obj);
+//        }
+//        return results;
+//    }
 
 
 

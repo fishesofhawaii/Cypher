@@ -4,35 +4,30 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ItemListActivity"
     android:background="@color/ArcelorMittalLightBlue"
-    tools:context=".ItemListActivity">
-
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/item_listview"
-        android:dividerHeight="40dp"
-        android:clickable="true" />
+    android:padding="16dp">
 
 
     <RelativeLayout
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_shape"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/item_listview">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
+
+        <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_listview"
+            android:dividerHeight="10dp"
+            android:divider="@color/ArcelorMittalLightBlue"
+            android:clickable="true" />
 
     </RelativeLayout>
-
-
 
     <Button
         android:text="Click Here to submit all answers"
@@ -44,7 +39,6 @@
         android:id="@+id/confirm_btn"
         android:onClick="submit_answers"
         android:backgroundTint="@color/ArcelorMittalLightGreen" />
-
 
 
 </RelativeLayout>

@@ -30,7 +30,9 @@ public class TypeBarcodeActivity extends Activity {
     boolean is_item = false;
 
 
-
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,9 +166,6 @@ public class TypeBarcodeActivity extends Activity {
 
             }
         }
-
-
-
 
     }
 
