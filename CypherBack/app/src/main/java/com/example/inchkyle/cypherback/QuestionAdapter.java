@@ -43,6 +43,7 @@ public class QuestionAdapter extends ArrayAdapter {
         Button yesButton;
         Button noButton;
         ImageView yesCheck;
+        ImageView noCheck;
     }
 
     @Override
@@ -82,8 +83,9 @@ public class QuestionAdapter extends ArrayAdapter {
             handler.q = (TextView) row.findViewById(R.id.questionText);
             handler.yesButton = (Button) row.findViewById(R.id.yesButton);
             handler.noButton = (Button) row.findViewById(R.id.noButton);
-            handler.response = (TextView) row.findViewById(R.id.responseText);
+//            handler.response = (TextView) row.findViewById(R.id.responseText);
             handler.yesCheck = (ImageView) row.findViewById(R.id.yesCheck);
+            handler.noCheck = (ImageView) row.findViewById(R.id.noCheck);
 
 
 
@@ -108,16 +110,19 @@ public class QuestionAdapter extends ArrayAdapter {
         handler.q.setText(question);
 
         if (provider.getAnswer().equals("1")) {
-            handler.response.setText("YES");
+//            handler.response.setText("YES");
             handler.yesCheck.setVisibility(View.VISIBLE);
+            handler.noCheck.setVisibility(View.INVISIBLE);
         }
         else if (provider.getAnswer().equals("0")) {
-            handler.response.setText("NO");
+//            handler.response.setText("NO");
+            handler.noCheck.setVisibility(View.VISIBLE);
             handler.yesCheck.setVisibility(View.INVISIBLE);
         }
         else if (provider.getAnswer().equals("NA")) {
-            handler.response.setText("");
+//            handler.response.setText("");
             handler.yesCheck.setVisibility(View.INVISIBLE);
+            handler.noCheck.setVisibility(View.INVISIBLE);
 
         }
         else {
@@ -136,8 +141,9 @@ public class QuestionAdapter extends ArrayAdapter {
         handler.yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handler.response.setText("YES");
+//                handler.response.setText("YES");
                 handler.yesCheck.setVisibility(View.VISIBLE);
+                handler.noCheck.setVisibility(View.INVISIBLE);
                 provider.setAnswer("1");
                 question_answer_map.put(question, "1");
 
@@ -151,7 +157,8 @@ public class QuestionAdapter extends ArrayAdapter {
         handler.noButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handler.response.setText("NO");
+//                handler.response.setText("NO");
+                handler.noCheck.setVisibility(View.VISIBLE);
                 handler.yesCheck.setVisibility(View.INVISIBLE);
                 provider.setAnswer("0");
                 question_answer_map.put(question, "0");

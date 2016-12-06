@@ -39,11 +39,11 @@ public class ScanOrTypeActivity extends Activity{
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int height = dm.heightPixels;
-        int width = dm.widthPixels;
+//        int height = dm.heightPixels;
+//        int width = dm.widthPixels;
 
-//        int height = 550;
-//        int width = 300;
+        int height = 1090;
+        int width = 900;
 
         ColorDrawable dw = new ColorDrawable(0xb0000000);
 

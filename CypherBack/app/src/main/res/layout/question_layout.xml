@@ -3,65 +3,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/border"
-    android:padding="16dp">
+    android:background="@drawable/border">
 
     <TextView
         android:text="This would be the question"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/questionText"
         android:textColor="@android:color/black"
         android:textSize="18dp"
+        android:paddingLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_width="200dp" />
 
     <RelativeLayout
         android:id="@+id/yesNo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="130dp"
         android:gravity="right"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp"
         android:padding="16dp">
 
-    <Button
-        android:id="@+id/noButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NO"
-        android:layout_below="@+id/yesButton"/>
-    <Button
-        android:id="@+id/yesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="YES"/>
+        <Button
+            android:id="@+id/yesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YES"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:id="@+id/noButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NO"
+            android:gravity="center"
+            android:layout_below="@+id/yesButton"
+            android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:id="@+id/yesCheck"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/border_circle"
+            android:paddingRight="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@id/yesButton"
+            android:layout_marginTop="5dp"/>
+        
+        <ImageView
+            android:id="@+id/noCheck"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/border_circle"
+            android:paddingRight="16dp"
+            android:layout_marginTop="55dp"
+            android:layout_toStartOf="@id/noButton"/>
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/yesCheck"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/border_circle"
-        android:layout_below="@id/questionText"
-        android:visibility="invisible"/>
 
 
 
 
 
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:id="@+id/responseText"
-        android:textSize="30sp"
-        android:layout_below="@+id/questionText"
-        android:layout_alignParentEnd="true"
-        android:textColor="#000000"/>
+    <!--<TextView-->
+        <!--android:text="TextView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="76dp"-->
+        <!--android:id="@+id/responseText"-->
+        <!--android:textSize="30sp"-->
+        <!--android:layout_below="@+id/questionText"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:textColor="#000000"/>-->
 
 </RelativeLayout>
