@@ -31,11 +31,16 @@ import android.os.Vibrator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpResponse;
@@ -55,6 +60,10 @@ public class HomeActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     Vibrator v;
+
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +169,11 @@ public class HomeActivity extends AppCompatActivity {
     //Clicking the update update button should retrieve database values for the employee again
     public void update_click(final View v) throws JSONException, UnsupportedEncodingException {
         System.out.println("GOING TO UPDATE THE DATABASE\n");
+
+        if (user.answer_list.size() == 0) {
+            Toast.makeText(this, "No answers found", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String BASE_URL = user.get_BASE_URL();
         final StringEntity entity = user.get_JSON_entity();
@@ -308,7 +322,9 @@ public class HomeActivity extends AppCompatActivity {
 
     //Go to the history page Eventually
     public void history_click(View v) {
-        Toast.makeText(this, "History Clicked", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(HomeActivity.this, HistoryActivity.class);
+        intent.putExtra("User", user);
+        startActivity(intent);
 
     }
 
@@ -366,6 +382,53 @@ public class HomeActivity extends AppCompatActivity {
         FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.sync_btn);
         System.out.println("Successful post");
 
+        //Below Gets the History objects together
+        ArrayList<String> ts_already_added = new ArrayList<String>();
+        final ArrayList<HistoryObject> passing_obs = new ArrayList<HistoryObject>();
+        final ArrayList<HistoryObject> failing_obs = new ArrayList<HistoryObject>();
+
+        for (Answer a : user.get_answer_list()) {
+            //If the timestamp has already been added to a History object
+            if (ts_already_added.contains(a.getTime_answered())){
+                if (a.answer_text.equals("0")) {
+                    for (HistoryObject h : passing_obs) {
+                        //Basically moves the failing obj to the failing array
+                        if (h.getTime_stamp().equals(a.getTime_answered())) {
+                            int index_to_del = passing_obs.indexOf(h);
+                            passing_obs.remove(index_to_del);
+
+                            h.setFailing();
+                            failing_obs.add(h);
+
+                        }
+                    }
+                }
+
+            }
+            else {
+                ts_already_added.add(a.getTime_answered());
+                HistoryObject h_obj = new HistoryObject(a.getTime_answered(),
+                        a.getLoc_id(), a.getAnswer_text());
+
+
+                if (h_obj.isPassing()) {
+                    passing_obs.add(h_obj);
+                }
+                else {
+                    failing_obs.add(h_obj);
+                }
+
+
+            }
+
+        }
+
+        System.out.println("There are " + passing_obs.size() +
+                " passing objs, " + failing_obs.size() + " failing obs");
+
+
+
+
         runOnUiThread(new Runnable(){
 
             @Override
@@ -373,6 +436,78 @@ public class HomeActivity extends AppCompatActivity {
                 //update ui here
                 // display toast here
                 Toast.makeText(getApplicationContext(), "Successfully Updated the Database", Toast.LENGTH_SHORT).show();
+
+                try {
+
+                    //Create the new file
+                    File dir = getFilesDir();
+                    File file = new File(dir, "times.tmp");
+
+                    FileInputStream fis = new FileInputStream(file);
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+
+                    ArrayList<HistoryObject> ans = (ArrayList<HistoryObject>) ois.readObject();
+
+                    for (HistoryObject h : failing_obs)  {
+                        ans.add(h);
+                    }
+                    for (HistoryObject h : passing_obs) {
+                        ans.add(h);
+                    }
+
+
+                    Collections.sort(ans, new Comparator<HistoryObject>() {
+                        @Override public int compare(HistoryObject p1, HistoryObject p2) {
+                            return Integer.parseInt(p1.getTime_stamp()) - Integer.parseInt(p2.getTime_stamp()); // Ascending
+                        }
+
+                    });
+
+                    FileOutputStream fos = new FileOutputStream(file);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(ans);
+
+                    oos.close();
+
+                }
+                catch (IOException e) {
+                    System.out.println("Does not exist yet");
+
+                    ArrayList<HistoryObject> ans = new ArrayList<HistoryObject>();
+
+                    for (HistoryObject h : failing_obs)  {
+                        ans.add(h);
+                    }
+                    for (HistoryObject h : passing_obs) {
+                        ans.add(h);
+                    }
+
+                    try {
+                        File dir = getFilesDir();
+                        File file = new File(dir, "times.tmp");
+
+                        FileOutputStream fos = new FileOutputStream(file);
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);
+                        oos.writeObject(user.get_answer_list());
+
+                    }
+                    catch (FileNotFoundException e1) {
+                        System.out.println("JUST GIVE UP");
+                        e1.printStackTrace();
+                    }
+                    catch (IOException e1) {
+                        System.out.println("JUST GIVE UP");
+                        e1.printStackTrace();
+                    }
+
+
+                    e.printStackTrace();
+                }
+                catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
 

@@ -29,6 +29,9 @@ public class ScanOrTypeActivity extends Activity{
     static final int TYPE_METHOD_REQUEST = 30;  // The request code for typing
     User user;
 
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

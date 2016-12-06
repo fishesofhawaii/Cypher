@@ -26,6 +26,11 @@ import java.util.List;
 public class QuestionActivity extends Activity {
     Item is_item = null;
     User user;
+
+    @Override
+    public void onBackPressed() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
