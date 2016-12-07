@@ -26,7 +26,6 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 //User has locations assigned, locations have items, and items have questions.
 public class User implements Serializable{
     String BASE_URL;
-
     String payroll_id;
     String employee_json;
     String current_barcode;

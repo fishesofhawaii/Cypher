@@ -85,6 +85,7 @@ public class QuestionActivity extends Activity {
 
             if (item.item_question_answer_map.keySet().size() == 0) {
                 item.populate_item_questions();
+                System.out.println("POPULATIN");
             }
 
             //This goes through all the questions and adds them to the adapter

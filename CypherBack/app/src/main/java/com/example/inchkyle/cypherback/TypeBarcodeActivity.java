@@ -128,37 +128,37 @@ public class TypeBarcodeActivity extends Activity {
                 Toast.makeText(this, "This is an invalid location, try again...", Toast.LENGTH_SHORT).show();
             }
             else {
-                if (l.get_user_assigned().toLowerCase().equals(user.get_payroll_id())){
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result", entered_code);
-                    System.out.println("Giving : " + entered_code);
-                    setResult(Activity.RESULT_OK, returnIntent);
-                    finish();
+//                if (l.get_user_assigned().toLowerCase().equals(user.get_payroll_id())){
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", entered_code);
+                System.out.println("Giving : " + entered_code);
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
 
-                }
-                else {
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    //Yes button clicked
-                                    continue_anyway();
-                                    break;
-
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    //No button clicked
-                                    //Do nothing, they have the opportunity to answer item questions
-                                    break;
-                            }
-                        }
-                    };
-                    AlertDialog.Builder ab = new AlertDialog.Builder(TypeBarcodeActivity.this, R.style.AlertDialogTheme);
-                    ab.setMessage("This Location is not assigned to you...\n\nCONTINUE ANYWAY?")
-                            .setPositiveButton("Yes", dialogClickListener)
-                            .setNegativeButton("No", dialogClickListener).show();
-
-                }
+//                }
+//                else {
+//                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            switch (which){
+//                                case DialogInterface.BUTTON_POSITIVE:
+//                                    //Yes button clicked
+//                                    continue_anyway();
+//                                    break;
+//
+//                                case DialogInterface.BUTTON_NEGATIVE:
+//                                    //No button clicked
+//                                    //Do nothing, they have the opportunity to answer item questions
+//                                    break;
+//                            }
+//                        }
+//                    };
+//                    AlertDialog.Builder ab = new AlertDialog.Builder(TypeBarcodeActivity.this, R.style.AlertDialogTheme);
+//                    ab.setMessage("This Location is not assigned to you...\n\nCONTINUE ANYWAY?")
+//                            .setPositiveButton("Yes", dialogClickListener)
+//                            .setNegativeButton("No", dialogClickListener).show();
+//
+//                }
 
             }
         }

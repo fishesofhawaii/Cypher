@@ -296,7 +296,7 @@ public class ItemListActivity extends Activity {
                     }
                 };
                 AlertDialog.Builder ab = new AlertDialog.Builder(ItemListActivity.this, R.style.AlertDialogTheme);
-                ab.setMessage("This Location is not assigned to you...\n\nCONTINUE ANYWAY?")
+                ab.setMessage("This barcode doesn't match our records...\n\nCONTINUE ANYWAY?")
                         .setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
 

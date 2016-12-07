@@ -3,6 +3,7 @@ package com.example.inchkyle.cypherback;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -70,19 +72,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-
-
-
-
-//        final Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                System.out.println("change color");
-//                FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.sync_btn);
-//                btn.setBackgroundTintList(ColorStateList.valueOf(R.color.AMRedDark));
-//            }
-//        }, 2000);
 
 
 
@@ -360,30 +349,65 @@ public class HomeActivity extends AppCompatActivity {
         // Check which request we're responding to
 
         if (resultCode == RESULT_OK){
-            String barcode = data.getStringExtra("result");
-            long timestamp = System.currentTimeMillis()/1000;
+            final String barcode = data.getStringExtra("result");
+            final long timestamp = System.currentTimeMillis()/1000;
 
             //Valid location, lets go to the location questions
             if (user.check_location(barcode)) {
 
-                user.get_location(barcode).set_timestamp(timestamp);
+                boolean ACTUALLY_MINE = false;
+                for (Location l : user.get_my_locations()) {
+                    if (l.barcode_num.equals(barcode)){
+                        ACTUALLY_MINE = true;
+                    }
+                }
 
-                user.populate_location(barcode);
-                user.set_current_barcode(barcode);
 
-                user.get_location(barcode).set_items();
-                user.get_location(barcode).print_location();
-                //Start activity that pulls up location questions
-                Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
+                if (!ACTUALLY_MINE) {
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    //Yes button clicked
+                                    continue_anyway(barcode, timestamp);
+                                    break;
 
-                intent.putExtra("User", user);
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    //No button clicked
+                                    //Do nothing, they have the opportunity to answer item questions
+                                    break;
+                            }
+                        }
+                    };
+                    AlertDialog.Builder ab = new AlertDialog.Builder(HomeActivity.this, R.style.AlertDialogTheme);
+                    ab.setMessage("This Location is not assigned to you...\n\nCONTINUE ANYWAY?")
+                            .setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
 
-                System.out.println("Put it in the intent");
-                startActivity(intent);
+                }
+
+                else {
+                    user.get_location(barcode).set_timestamp(timestamp);
+
+                    user.populate_location(barcode);
+                    user.set_current_barcode(barcode);
+
+                    user.get_location(barcode).set_items();
+                    user.get_location(barcode).print_location();
+                    //Start activity that pulls up location questions
+                    Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
+
+                    intent.putExtra("User", user);
+
+                    System.out.println("Put it in the intent");
+                    startActivity(intent);
+
+                }
+
             }
             else {
-                Toast.makeText(this, "This Location is not on your route!" +
-                        "\nScan a Location that is on your route!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "This barcode is not a valid location...", Toast.LENGTH_SHORT).show();
                 // Vibrate for 500 milliseconds
                 v.vibrate(500);
             }
@@ -541,6 +565,23 @@ public class HomeActivity extends AppCompatActivity {
         File file = new File(dir, "t.tmp");
         file.delete();
 
+
+    }
+    public void continue_anyway(String barcode, long timestamp) {
+        user.get_location(barcode).set_timestamp(timestamp);
+
+        user.populate_location(barcode);
+        user.set_current_barcode(barcode);
+
+        user.get_location(barcode).set_items();
+        user.get_location(barcode).print_location();
+        //Start activity that pulls up location questions
+        Intent intent = new Intent(HomeActivity.this, QuestionActivity.class);
+
+        intent.putExtra("User", user);
+
+        System.out.println("Put it in the intent");
+        startActivity(intent);
 
     }
 
