@@ -32,6 +32,8 @@ public class HistoryActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
+        setTitle("History");
+
         File dir = getFilesDir();
         File file = new File(dir, "times.tmp");
 
@@ -40,25 +42,34 @@ public class HistoryActivity extends AppCompatActivity {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             ArrayList<HistoryObject> ans = (ArrayList<HistoryObject>) ois.readObject();
-            Collections.reverse(ans);
 
-            for (HistoryObject h : ans) {
-                String sentence = "";
-                if (h.isPassing()) {
-                    sentence = "This location passed all location and item questions on this push!";
-                }
-                else {
-                    sentence = "This location DID NOT pass all location and item questions on this push!";
-
-                }
-                long t = Long.parseLong(h.getTime_stamp());
-
-                String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").
-                        format(new java.util.Date (t*1000));
-
-
-                Location.Object newLocation = new Location.Object("LOC " + h.getLoc_id(),date, sentence);
+            if (ans.size() == 0) {
+                Location.Object newLocation = new Location.Object("","You have no pushed answers!",
+                        "Inspect an item and push it to the Database!");
                 adapter.add(newLocation);
+            }
+            else {
+                Collections.reverse(ans);
+
+                for (HistoryObject h : ans) {
+                    String sentence = "";
+                    if (h.isPassing()) {
+                        sentence = "This location passed all location and item questions on this push!";
+                    }
+                    else {
+                        sentence = "This location DID NOT pass all location and item questions on this push!";
+
+                    }
+                    long t = Long.parseLong(h.getTime_stamp());
+
+                    String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").
+                            format(new java.util.Date (t*1000));
+
+
+                    Location.Object newLocation = new Location.Object("LOC " + h.getLoc_id(),date, sentence);
+                    adapter.add(newLocation);
+
+                }
 
             }
 
@@ -66,6 +77,11 @@ public class HistoryActivity extends AppCompatActivity {
         }
         catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+
+            Location.Object newLocation = new Location.Object("","You have no pushed answers!",
+                    "Inspect an item and push it to the Database!");
+            adapter.add(newLocation);
+
         }
 
     }

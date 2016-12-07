@@ -30,10 +30,6 @@ public class ScanOrTypeActivity extends Activity{
     User user;
 
     @Override
-    public void onBackPressed() {
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -42,18 +38,12 @@ public class ScanOrTypeActivity extends Activity{
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-//        int height = dm.heightPixels;
-//        int width = dm.widthPixels;
-
-        int height = 1090;
-        int width = 900;
-
-        ColorDrawable dw = new ColorDrawable(0xb0000000);
+        int height = dm.heightPixels;
+        int width = dm.widthPixels;
 
 
+        getWindow().setLayout((int) (width*.6), (int) (height*.45));
 
-        getWindow().setLayout((int) (width*.8), (int) (height*.8));
-//        getWindow().setBackgroundDrawable(dw);
 
     }
 

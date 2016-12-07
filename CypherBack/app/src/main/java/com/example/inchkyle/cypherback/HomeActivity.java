@@ -63,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Toast.makeText(this, "Back Button Disabled on this Page", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -235,6 +236,8 @@ public class HomeActivity extends AppCompatActivity {
                                     public void sendFailureMessage(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                                         //Second to last called in a failure
                                         System.out.println("Send fail");
+                                        progressDialog.dismiss();
+
                                     }
 
                                     //           TODO: Display message if user is unable to log in
@@ -243,6 +246,19 @@ public class HomeActivity extends AppCompatActivity {
                                     public void sendRetryMessage(int retryNo) {
                                         //Gets called every attempt to send POST
                                         System.out.println("Send Retry");
+                                        if (retryNo > 1) {
+                                            client.getHttpClient().getConnectionManager().shutdown();
+
+                                            POST_SUCCESS = false;
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(HomeActivity.this,
+                                                            "Post failed, check connection and try again",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
 
                                     }
 
@@ -462,6 +478,14 @@ public class HomeActivity extends AppCompatActivity {
                         }
 
                     });
+
+                    //Only saves the last 50
+                    if (ans.size() > 49){
+                        for (int i = ans.size() - 1; i > 49; i--){
+                            ans.remove(i);
+                        }
+                    }
+
 
                     FileOutputStream fos = new FileOutputStream(file);
                     ObjectOutputStream oos = new ObjectOutputStream(fos);

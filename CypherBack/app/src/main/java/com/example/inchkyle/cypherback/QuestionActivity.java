@@ -29,6 +29,7 @@ public class QuestionActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        Toast.makeText(this, "Back Button Disabled on this Page", Toast.LENGTH_SHORT).show();
     }
 
     @Override

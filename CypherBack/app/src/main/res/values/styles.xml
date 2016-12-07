@@ -18,6 +18,7 @@
 
     <style name="AppTheme.PopupTheme">
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
 
     </style>
