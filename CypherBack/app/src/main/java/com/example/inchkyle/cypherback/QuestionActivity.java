@@ -69,6 +69,7 @@ public class QuestionActivity extends Activity {
         }
         //Otherwise we are looking at an item barcode
         else {
+            System.out.println("Yeah you were right");
             //Need to change this to a try/catch for null pointers
             Item item = user.get_location(user.location_barcode).get_item(user.current_barcode);
             is_item = item;
@@ -81,6 +82,10 @@ public class QuestionActivity extends Activity {
 
             ListView listview = (ListView)findViewById(R.id.questions_listview);
             QuestionAdapter adapter = new QuestionAdapter(getApplicationContext(), R.layout.question_layout);
+
+            if (item.item_question_answer_map.keySet().size() == 0) {
+                item.populate_item_questions();
+            }
 
             //This goes through all the questions and adds them to the adapter
             for (String question : item.item_question_answer_map.keySet()) {

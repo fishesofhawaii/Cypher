@@ -51,14 +51,6 @@ public class ItemListActivity extends Activity {
         setContentView(R.layout.items_screen);
 
 
-//        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-//        mRecyclerView.setHasFixedSize(false);
-//        mLayoutManager = new LinearLayoutManager(this);
-//        mRecyclerView.setLayoutManager(mLayoutManager);
-//        mAdapter = new ItemAdapter(getDataSet());
-//        mRecyclerView.setAdapter(mAdapter);
-
-
         Intent home_intent = getIntent();
 
         if (home_intent != null) {
@@ -72,7 +64,6 @@ public class ItemListActivity extends Activity {
         String title = location.loc_barcode_name + " Devices";
         setTitle(title);
 
-//        Replace with cardview
         ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<>(this, R.layout.item_text_view,
                         new ArrayList<>(user.get_location(
@@ -287,11 +278,43 @@ public class ItemListActivity extends Activity {
             }
             else {
                 //Maybe instead of blocking here we need to figure out if it is the right item
-                Toast.makeText(this, "This Location is not on your route!" +
-                        "\nScan a Location that is on your route!", Toast.LENGTH_SHORT).show();
+
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                //Yes button clicked
+                                continue_anyway();
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                //Do nothing, they have the opportunity to answer item questions
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder ab = new AlertDialog.Builder(ItemListActivity.this, R.style.AlertDialogTheme);
+                ab.setMessage("This Location is not assigned to you...\n\nCONTINUE ANYWAY?")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+
+
             }
         }
 
     }
+
+    private void continue_anyway() {
+
+        Intent intent = new Intent(ItemListActivity.this, QuestionActivity.class);
+
+        intent.putExtra("User", user);
+        startActivity(intent);
+
+
+    }
+
 
 }
